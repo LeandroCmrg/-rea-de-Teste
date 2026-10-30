@@ -217,17 +217,34 @@ aside::-webkit-scrollbar{width:9px}aside::-webkit-scrollbar-thumb{background:var
 .rayo-value-question>.btn{width:100%;min-height:49px}
 .rayo-review-warning{margin:2px 0 18px;font-size:13px;color:var(--muted)}
 @media(max-width:740px){.rayo-value-question{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}.rayo-value-options{grid-template-columns:1fr 1fr}}
+
+/* Boletos - formulário e calendário de parcelas */
+.boleto-form .field{min-width:0}.boleto-form .field input,.boleto-form .field select{min-width:0;max-width:100%;width:100%}
+.boleto-info{color:var(--muted);font-size:12px;line-height:1.55;margin:8px 0}
+.boleto-preview{margin:16px 0 5px;display:grid;gap:10px;max-height:min(39vh,390px);overflow-y:auto;overscroll-behavior:contain}
+.boleto-preview-item{border:1px solid var(--line);background:var(--surface2);border-radius:15px;padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;min-width:0}
+.boleto-preview-item .field{margin:0}.boleto-preview-item .field input{font-size:14px;min-height:42px;padding:8px}
+.boleto-preview-number{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.boleto-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface2);padding:12px;border-radius:13px;margin-top:14px}
+.boleto-item{border:1px solid var(--line);border-radius:16px;padding:15px;margin:12px 0;background:var(--surface2)}
+.boleto-item-head{display:flex;align-items:start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.boleto-item-head strong{font-size:15px}
+.boleto-item-row{display:flex;align-items:center;gap:12px;justify-content:space-between;border-top:1px solid var(--line);padding:11px 0;flex-wrap:wrap}
+.boleto-item-row:last-child{padding-bottom:0}
+.boleto-item-row small{display:block;margin-top:3px}
+.boleto-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+@media(max-width:560px){.boleto-form.field-grid{grid-template-columns:1fr}.boleto-form.field-grid>.field{grid-column:1/-1}.boleto-preview-item{grid-template-columns:1fr 1fr}.boleto-item-row{align-items:start}}
 </style></head><body class="auth-locked">
 <section id="loginScreen" class="login-screen" aria-label="Login"><div class="login-box"><div class="login-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></div><h1>rayo<span class="brand-dot">.</span></h1><p>Suas finanças, sem complicar.</p><form id="loginForm"><label for="loginWho">Usuário</label><input id="loginWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Seu nome de usuário" required><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required><button class="btn" id="loginButton" type="submit">Entrar</button><p class="auth-switch">Ainda não tem uma conta? <button type="button" class="auth-link" onclick="switchAuthView('register')">Criar minha conta</button></p></form><form id="registerForm" hidden><p class="register-lede">Seu espaço financeiro privado, com dados salvos na nuvem.</p><label for="registerWho">Escolha seu usuário</label><input id="registerWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Ex.: leandro.silva" required><small class="form-hint">3 a 32 caracteres, sem espaços. Letras, números, ponto, hífen e _.</small><label for="registerPassword">Crie uma senha</label><input id="registerPassword" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Pelo menos 12 caracteres" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><label for="registerConfirmation">Confirme sua senha</label><input id="registerConfirmation" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Digite a senha novamente" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><p class="pw-hint" id="registerMatch" aria-live="polite">As duas senhas devem ser iguais.</p><button class="btn" type="submit" id="registerButton">Criar minha conta</button><p class="auth-switch">Já tem uma conta? <button class="auth-link" type="button" onclick="switchAuthView('login')">Fazer login</button></p></form><div id="loginMessage" aria-live="polite"></div></div></section>
 <aside aria-label="Navegação"><div class="brand"><span class="brand-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></span><span class="brand-name">rayo<span class="brand-dot">.</span></span></div><div id="sn"></div><div class="side-bottom" aria-hidden="true"></div></aside>
-<main><header class="main-head"><div class="head-title"><div class="eyebrow" id="eyebrow"></div><h1 id="ti">Visão geral</h1></div><div class="month-control"><button class="mini-action" aria-label="Mês anterior" onclick="moveMonth(-1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><input type="month" id="ym" aria-label="Mês selecionado"><button class="mini-action" aria-label="Próximo mês" onclick="moveMonth(1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div><button class="btn add-icon-btn" id="quickHeader" onclick="openAddMenu()" aria-label="Novo lançamento" title="Novo lançamento"><svg class="ico lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="head-user"><span class="user-badge" id="userBadge">U</span><span id="sessionName" class="user-name" style="font-weight:650"></span><span class="cloud-status" id="cloudStatus" role="status" aria-live="polite" title="Situação dos dados na nuvem">☁ Nuvem conectada</span><button class="mini-action" title="Meu perfil" onclick="openMyProfile()"><svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button></div></header><div id="v"></div><footer class="rayo-labs-footer">RAYO Labs · v0.2.3 Beta</footer></main>
+<main><header class="main-head"><div class="head-title"><div class="eyebrow" id="eyebrow"></div><h1 id="ti">Visão geral</h1></div><div class="month-control"><button class="mini-action" aria-label="Mês anterior" onclick="moveMonth(-1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><input type="month" id="ym" aria-label="Mês selecionado"><button class="mini-action" aria-label="Próximo mês" onclick="moveMonth(1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div><button class="btn add-icon-btn" id="quickHeader" onclick="openAddMenu()" aria-label="Novo lançamento" title="Novo lançamento"><svg class="ico lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="head-user"><span class="user-badge" id="userBadge">U</span><span id="sessionName" class="user-name" style="font-weight:650"></span><span class="cloud-status" id="cloudStatus" role="status" aria-live="polite" title="Situação dos dados na nuvem">☁ Nuvem conectada</span><button class="mini-action" title="Meu perfil" onclick="openMyProfile()"><svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button></div></header><div id="v"></div><footer class="rayo-labs-footer">RAYO Labs · v0.3.0 Beta</footer></main>
 <nav id="bn" class="bottom" aria-label="Navegação inferior"></nav><div id="m" class="modal" role="dialog" aria-modal="true" aria-hidden="true"><div id="mb" class="modal-panel"></div></div><script>const KEY="mcf_v1"; // Os dados anteriores continuam guardados no navegador como backup.
-const APP_VERSION="rayo-labs-v0.2.3-20261030";
-const RAYO_LABS_VERSION="v0.2.3 Beta";
-const def=()=>({rec:[],fix:[],var:[],car:[],cmp:[],div:[],res:[],budgets:[],favs:[],reserveHistory:[],settings:{}});
+const APP_VERSION="rayo-labs-v0.3.0-20261030";
+const RAYO_LABS_VERSION="v0.3.0 Beta";
+const def=()=>({rec:[],fix:[],var:[],car:[],cmp:[],div:[],bol:[],res:[],budgets:[],favs:[],reserveHistory:[],settings:{}});
 const normalizeS=data=>{
  const a=Object.assign(def(),data&&typeof data==='object'?data:{});
- for(const k of ['rec','fix','var','car','cmp','div','res','budgets','favs','reserveHistory'])if(!Array.isArray(a[k]))a[k]=[];
+ for(const k of ['rec','fix','var','car','cmp','div','bol','res','budgets','favs','reserveHistory'])if(!Array.isArray(a[k]))a[k]=[];
  if(!a.settings||typeof a.settings!=='object')a.settings={};
  return a;
 };
@@ -597,8 +614,8 @@ function I(name,cls=''){
  return `<svg class="ico ${cls}" viewBox="0 0 24 24" aria-hidden="true">${GLYPHS[name]||GLYPHS.circle}</svg>`;
 }
 let ym=loc(now),tab='dash',calendarSelected=today,expenseFilter='all',expenseSearch='',expenseStatus='all',gainStatus='all',historySearch='',historyKind='all',historyStatus='all';
-const NAV=[['dash','home','Início'],['rec','trendup','Ganhos'],['spend','trenddown','Gastos'],['calendar','calendar','Calendário'],['history','search','Histórico'],['recurr','repeat','Recorrências'],['budgets','target','Orçamentos'],['res','piggy','Metas e reserva'],['car','credit','Cartões'],['div','receipt','Dívidas'],['rel','chart','Relatórios'],['sim','calculator','Simulador'],['settings','settings','Ajustes']];
-const T={dash:'Visão geral',rec:'Meus ganhos',spend:'Meus gastos',calendar:'Calendário financeiro',history:'Pesquisar lançamentos',recurr:'Recorrências',budgets:'Meus orçamentos',res:'Metas e reserva',car:'Cartões',div:'Dívidas',rel:'Relatórios',sim:'Calculadora',settings:'Ajustes'};
+const NAV=[['dash','home','Início'],['rec','trendup','Ganhos'],['spend','trenddown','Gastos'],['calendar','calendar','Calendário'],['history','search','Histórico'],['recurr','repeat','Recorrências'],['budgets','target','Orçamentos'],['res','piggy','Metas e reserva'],['car','credit','Cartões'],['div','receipt','Dívidas'],['bol','receipt','Boletos'],['rel','chart','Relatórios'],['sim','calculator','Simulador'],['settings','settings','Ajustes']];
+const T={dash:'Visão geral',rec:'Meus ganhos',spend:'Meus gastos',calendar:'Calendário financeiro',history:'Pesquisar lançamentos',recurr:'Recorrências',budgets:'Meus orçamentos',res:'Metas e reserva',car:'Cartões',div:'Dívidas',bol:'Boletos',rel:'Relatórios',sim:'Calculadora',settings:'Ajustes'};
 const has=(o,k)=>Object.prototype.hasOwnProperty.call(o||{},k);
 const utcDate=s=>new Date(s+'T12:00:00Z');
 const validDate=s=>/^\d{4}-\d\d-\d\d$/.test(String(s||''))&&!Number.isNaN(Date.parse(s+'T12:00:00Z'));
@@ -631,6 +648,14 @@ function moneyItems(y){
  const date=monthDue(d,y),paid=has(d.pm,y)?!!d.pm[y]:ix<Number(d.pagas||0);
  arr.push({kind:'div',id:d.id,item:d,date,key:'div:'+d.id+':'+y,type:'out',desc:d.nome||'Dívida',cat:'Dívidas',valor:Number(d.parcela),paid,freq:'mensal',source:'bill'});
  }}
+ for(const b of S.bol||[])for(const p of b.parcelas||[]){
+  if(!validDate(p.vencimento)||!p.vencimento.startsWith(y))continue;
+  const valor=Number(p.valor);
+  if(!Number.isFinite(valor)||valor<=0)continue;
+  arr.push({kind:'bol',id:p.id,item:b,date:p.vencimento,key:'bol:'+b.id+':'+p.id,type:'out',
+   desc:b.nome||'Boleto',cat:b.cat||'Outros',valor,paid:!!p.pago,
+   freq:'unica',source:'bill'});
+ }
  return arr.sort((a,b)=>b.date.localeCompare(a.date)||a.type.localeCompare(b.type));
 }
 function fat(c){const m={};for(const p of S.cmp.filter(p=>p.cid===c.id)){
@@ -721,7 +746,7 @@ function settings(){
  const densityModes=`<div class="segmented appearance-segment">${[['comfortable','Confortável'],['compact','Compacto']].map(([v,l])=>`<button class="${opts.density===v?'active':''}" onclick="setAppearanceOption('density','${v}')">${l}</button>`).join('')}</div>`;
  const home=[...(opts.homeCards||DEFAULT_HOME),...DEFAULT_HOME.filter(id=>!(opts.homeCards||DEFAULT_HOME).includes(id))].map(id=>`<div class="personalize-row"><label class="personal-check"><input type="checkbox" ${opts.homeCards.includes(id)?'checked':''} onchange="updateAppearanceList('homeCards','${id}','toggle')"> ${HOME_NAMES[id]}</label><div class="row-actions"><button class="mini-action" title="Mover para cima" aria-label="Mover ${HOME_NAMES[id]} para cima" onclick="updateAppearanceList('homeCards','${id}','up')">${I('chevronleft','sm')}</button><button class="mini-action" title="Mover para baixo" aria-label="Mover ${HOME_NAMES[id]} para baixo" onclick="updateAppearanceList('homeCards','${id}','down')">${I('chevronright','sm')}</button></div></div>`).join('');
  const selectedShortcuts=(Array.isArray(opts.quickTabs)&&opts.quickTabs.length?opts.quickTabs:DEFAULT_SHORTCUTS);
- const quick=PRIMARY_PAGES.concat(['sim','history','budgets','res','car','rel','recurr','div']).map(id=>{const n=NAV.find(x=>x[0]===id);return `<label class="shortcut-chip ${selectedShortcuts.includes(id)?'chosen':''}"><input type="checkbox" ${selectedShortcuts.includes(id)?'checked':''} onchange="updateAppearanceList('quickTabs','${id}','toggle')">${I(n[1],'sm')} ${E(n[2])}</label>`}).join('');
+ const quick=PRIMARY_PAGES.concat(['sim','history','budgets','res','car','rel','recurr','div','bol']).map(id=>{const n=NAV.find(x=>x[0]===id);return `<label class="shortcut-chip ${selectedShortcuts.includes(id)?'chosen':''}"><input type="checkbox" ${selectedShortcuts.includes(id)?'checked':''} onchange="updateAppearanceList('quickTabs','${id}','toggle')">${I(n[1],'sm')} ${E(n[2])}</label>`}).join('');
  const hide=NAV.filter(n=>!['dash','settings'].includes(n[0])).map(n=>`<label class="shortcut-chip"><input type="checkbox" ${!opts.hiddenSections.includes(n[0])?'checked':''} onchange="updateAppearanceList('hiddenSections','${n[0]}','toggle')"> ${E(n[2])}</label>`).join('');
  const customList=['rec','fix','var'].flatMap(kind=>(custom[kind]||[]).map((c,idx)=>`<div class="settings-row"><span class="category-mini"><i style="background:${E(c.color||'#315774')}"></i> ${E(c.emoji||'')} ${E(c.name)} <small>${kindNames[kind]}</small></span><button class="mini-action" aria-label="Excluir categoria ${E(c.name)}" onclick="removeCategory('${kind}',${idx})">${I('trash','sm')}</button></div>`)).join('');
  return `<div class="settings-page">
@@ -794,7 +819,150 @@ function simulator(){
  </div></div>`;
 }
 
-const V={dash:dashboard,rec:gains,spend:expenses,calendar,history,recurr:recurrence,budgets,res:goals,car:cardsPage,div:debts,rel:reports,sim:simulator,settings};
+
+// RAYO Labs v0.3.0 — Boletos. Cada parcela é uma movimentação única.
+// O vencimento não marca a parcela como paga; apenas o usuário confirma.
+let boletoDraft=null;
+function boletoDueDate(first,monthOffset){
+ if(!validDate(first))return '';
+ const [year,month,day]=first.split('-').map(Number);
+ const shifted=new Date(Date.UTC(year,month-1+monthOffset,1));
+ const y=shifted.getUTCFullYear(),m=shifted.getUTCMonth()+1;
+ const last=new Date(Date.UTC(y,m,0)).getUTCDate();
+ return `${y}-${String(m).padStart(2,'0')}-${String(Math.min(day,last)).padStart(2,'0')}`;
+}
+function boletoSchedule(total,n,first){
+ const cents=Math.round(Number(total)*100),count=Math.floor(Number(n));
+ if(!Number.isSafeInteger(cents)||cents<count||count<1||count>60||!validDate(first))return [];
+ const each=Math.floor(cents/count),extra=cents%count;
+ return Array.from({length:count},(_,i)=>({
+  id:uid(),numero:i+1,vencimento:boletoDueDate(first,i),
+  valor:(each+(i===count-1?extra:0))/100,pago:false,pagoEm:''
+ }));
+}
+function boletoItemRows(){
+ return [...document.querySelectorAll('.boleto-preview-item')].map((row,i)=>({
+  id:row.dataset.pid||uid(),numero:i+1,
+  vencimento:row.querySelector('.bol-due')?.value||'',
+  dateCustom:row.querySelector('.bol-due')?.dataset.custom==='1',
+  valor:moneyValue(row.querySelector('.bol-value')),
+  amountCustom:row.querySelector('.bol-value')?.dataset.custom==='1',
+  pago:row.dataset.paid==='true',pagoEm:row.dataset.paidDate||''
+ }));
+}
+function openBoletoEditor(id=''){
+ boletoDraft=id?(S.bol||[]).find(b=>b.id===id)||null:null;
+ const b=boletoDraft,count=Math.max(1,b?.parcelas?.length||1),total=b?.valorTotal??'',first=b?.primeiro||today;
+ const cats=[...new Set([...getCats('fix'),...getCats('var')])];
+ open_(`${modalHeader(b?'Editar boleto':'Adicionar boleto','Organize os vencimentos e acompanhe cada pagamento.')}
+ <div class="field-grid boleto-form">
+  <div class="field full">${FIELD('Nome do boleto <span class="optional">(opcional)</span>',`<input id="bolName" maxlength="90" value="${E(b?.nome||'')}" placeholder="Ex.: Geladeira, curso ou aluguel">`)}</div>
+  ${FIELD('Tipo',`<select id="bolType" onchange="boletoTypeChanged()"><option value="vista" ${count===1?'selected':''}>À vista</option><option value="parcelado" ${count>1?'selected':''}>Parcelado</option></select>`)}
+  ${FIELD('Valor total (R$)',`<input id="bolTotal" type="number" min="0.01" step="0.01" inputmode="decimal" value="${E(total)}" placeholder="R$ 0,00" onchange="renderBoletoSchedule()">`)}
+  ${FIELD('Primeiro vencimento',`<input id="bolFirst" type="date" value="${E(first)}" onchange="renderBoletoSchedule()" required>`)}
+  <div class="field ${count===1?'hidden':''}" id="bolCountWrap">${FIELD('Quantidade de parcelas',`<input id="bolCount" type="number" min="2" max="60" step="1" inputmode="numeric" value="${count===1?2:count}" onchange="renderBoletoSchedule()">`)}</div>
+  <div class="field full">${FIELD('Categoria',`<select id="bolCategory">${selectOpts(cats,b?.cat||'Outra fixa')}</select>`)} </div>
+  <div class="field full">${FIELD('Observação <span class="optional">(opcional)</span>',`<input id="bolNote" maxlength="180" value="${E(b?.obs||'')}" placeholder="Detalhes que você queira guardar">`)}</div>
+ </div>
+ <div class="boleto-info">Os vencimentos mensais são sugeridos automaticamente. Você pode alterar a data e o valor de cada parcela.</div>
+ <div id="bolPreview" class="boleto-preview" aria-live="polite"></div>
+ <div class="boleto-summary" id="bolSummary"></div>
+ <div class="modal-footer"><button class="btn light" onclick="close_()">Cancelar</button><button class="btn" onclick="saveBoleto('${E(id)}')">${I('check','sm')} ${b?'Salvar alterações':'Salvar boleto'}</button></div>`);
+ renderBoletoSchedule();
+}
+function boletoTypeChanged(){
+ const installment=$('#bolType')?.value==='parcelado';
+ $('#bolCountWrap')?.classList.toggle('hidden',!installment);
+ renderBoletoSchedule();
+}
+function renderBoletoSchedule(){
+ const root=$('#bolPreview'),summary=$('#bolSummary');if(!root)return;
+ const existing=boletoItemRows(),type=$('#bolType')?.value||'vista';
+ const n=type==='vista'?1:Math.floor(Number($('#bolCount')?.value)||0);
+ const total=moneyValue($('#bolTotal')),first=$('#bolFirst')?.value;
+ if(!Number.isFinite(total)||total<=0||!validDate(first)||n<1||n>60){
+  root.innerHTML='';summary.innerHTML='<small>Preencha valor total, vencimento e quantidade para visualizar as parcelas.</small>';return;
+ }
+ const base=boletoSchedule(total,n,first);
+ if(!base.length){root.innerHTML='';summary.innerHTML='<small>Confira o valor e o número de parcelas (até 60).</small>';return;}
+ const prior=existing.length?existing:boletoDraft?.parcelas||[];
+ const rows=base.map((p,i)=>{
+  const old=prior[i];
+  // Reaproveita marcas e vencimentos ajustados sem alterar pagamentos já feitos.
+  if(old&&prior.length===base.length){
+   p.id=old.id||p.id;p.pago=!!old.pago;p.pagoEm=old.pagoEm||'';
+   const originalDate=boletoDueDate(boletoDraft?.primeiro||first,i);
+   const customDate=old.dateCustom??(old.vencimento!==originalDate);
+   if(customDate&&validDate(old.vencimento))p.vencimento=old.vencimento;
+   const oldValue=Number(old.valor),wasManual=old.amountCustom===true || (!existing.length && Math.round(oldValue*100)!==Math.round(base[i].valor*100));
+   if(wasManual&&oldValue>0)p.valor=oldValue;
+  }
+  return p;
+ });
+ root.innerHTML=rows.map((p,i)=>{
+  const original=boletoDueDate(first,i),customDate=p.vencimento!==original;
+  const amountManual=existing[i]?.amountCustom===true || (!existing.length && !!boletoDraft?.parcelas?.[i] && Math.round(Number(boletoDraft.parcelas[i].valor)*100)!==Math.round(Number(base[i].valor)*100));
+  return `<div class="boleto-preview-item" data-pid="${E(p.id)}" data-paid="${p.pago?'true':'false'}" data-paid-date="${E(p.pagoEm)}">
+   <div class="boleto-preview-number"><strong>Parcela ${i+1} de ${n}</strong>${p.pago?`<span class="chip paid">Paga</span>`:''}</div>
+   <div class="field">${FIELD('Vencimento',`<input class="bol-due" type="date" value="${E(p.vencimento)}" data-custom="${customDate?'1':'0'}" onchange="this.dataset.custom='1'">`)}</div>
+   <div class="field">${FIELD('Valor (R$)',`<input class="bol-value" type="number" min="0.01" step="0.01" value="${E(p.valor)}" data-custom="${amountManual?'1':'0'}" oninput="this.dataset.custom='1';updateBoletoSummary()">`)}</div>
+  </div>`;
+ }).join('');
+ initMoneyMasks();updateBoletoSummary();
+}
+function updateBoletoSummary(){
+ const box=$('#bolSummary');if(!box)return;
+ const rows=boletoItemRows(),total=moneyValue($('#bolTotal'));
+ const sumCents=rows.reduce((s,p)=>s+Math.round(p.valor*100),0);
+ const target=Math.round(total*100);
+ const difference=target-sumCents;
+ box.innerHTML=`<div><small>Total informado</small><br><strong>${centsToDisplay(total||0)}</strong></div><div style="text-align:right"><small>${difference===0?'Parcelas conferidas':'Diferença nas parcelas'}</small><br><strong class="${difference===0?'good':'bad'}">${centsToDisplay(Math.abs(difference)/100)}</strong></div>`;
+}
+function saveBoleto(id=''){
+ const name=($('#bolName')?.value||'').trim().slice(0,90)||'Boleto',type=$('#bolType')?.value||'vista';
+ const total=moneyValue($('#bolTotal')),first=$('#bolFirst')?.value,cat=$('#bolCategory')?.value,obs=($('#bolNote')?.value||'').trim().slice(0,180),rows=boletoItemRows();
+ const count=type==='vista'?1:Math.floor(Number($('#bolCount')?.value)||0);
+ if(!Number.isFinite(total)||total<=0||total>1e9)return er('Informe o valor total do boleto.');
+ if(!validDate(first)||!rows.length||rows.length!==count||count>60||count<1||(type==='parcelado'&&count<2))return er('Confira os vencimentos e o número de parcelas.');
+ if(![...getCats('fix'),...getCats('var')].includes(cat))return er('Selecione uma categoria válida.');
+ if(rows.some(p=>!validDate(p.vencimento)||!Number.isFinite(p.valor)||p.valor<=0))return er('Confira as datas e os valores das parcelas.');
+ const totalCents=Math.round(total*100),sumCents=rows.reduce((v,p)=>v+Math.round(p.valor*100),0);
+ if(totalCents!==sumCents)return er('A soma das parcelas deve ser igual ao valor total do boleto.');
+ // Para não mudar a identidade de uma parcela já paga, o usuário deve desfazer o pagamento antes de remover parcelas.
+ const old=(S.bol||[]).find(b=>b.id===id);
+ if(old){
+  const currentIds=new Set(rows.map(r=>r.id));
+  if((old.parcelas||[]).some(p=>p.pago&&!currentIds.has(p.id)))return er('Desfaça o pagamento de parcelas antes de removê-las.');
+ }
+ const bolet={id:old?.id||uid(),nome:name,valorTotal:Math.round(total*100)/100,primeiro:first,cat,obs,
+  parcelas:rows.map((p,i)=>({id:p.id,numero:i+1,vencimento:p.vencimento,valor:Math.round(p.valor*100)/100,pago:!!p.pago,pagoEm:p.pagoEm||''}))};
+ if(old)S.bol=S.bol.map(b=>b.id===id?bolet:b);else S.bol.push(bolet);
+ ym=first.slice(0,7);calendarSelected=first;save();close_();tab='bol';go();
+}
+function deleteBoleto(id){
+ const b=(S.bol||[]).find(x=>x.id===id);if(!b)return;
+ if(!confirm(`Excluir o boleto “${b.nome||'Boleto'}” e todas as suas parcelas?`))return;
+ S.bol=S.bol.filter(x=>x.id!==id);save();go();
+}
+function boletoPage(){
+ const docs=(S.bol||[]).slice().sort((a,b)=>String(a.primeiro||'').localeCompare(String(b.primeiro||'')));
+ const relevant=docs.flatMap(b=>(b.parcelas||[]).map(p=>({b,p})));
+ const pending=relevant.filter(({p})=>!p.pago).reduce((sum,{p})=>sum+Number(p.valor||0),0);
+ const overdue=relevant.filter(({p})=>!p.pago&&p.vencimento<today).length;
+ const pendingThisMonth=relevant.filter(({p})=>!p.pago&&p.vencimento?.startsWith(ym));
+ const cards=docs.map(b=>{
+  const paid=(b.parcelas||[]).filter(p=>p.pago).length,all=(b.parcelas||[]).length;
+  return `<div class="boleto-item">
+   <div class="boleto-item-head"><div><strong>${I('receipt','sm')} ${E(b.nome||'Boleto')}</strong><br><small>${E(b.cat||'Outros')} · ${all===1?'À vista':all+' parcelas'} · Total ${R(b.valorTotal)}</small></div><div class="boleto-actions"><button class="mini-action" aria-label="Editar boleto" title="Editar boleto" onclick="openBoletoEditor('${b.id}')">${I('edit','sm')}</button><button class="mini-action" aria-label="Excluir boleto" title="Excluir boleto" onclick="deleteBoleto('${b.id}')">${I('trash','sm')}</button></div></div>
+   ${(b.parcelas||[]).map(p=>`<div class="boleto-item-row"><div><strong>${all>1?'Parcela '+p.numero+'/'+all:'Pagamento único'}</strong><small>Vence em ${D(p.vencimento)} · ${p.pago?'Pago'+(p.pagoEm?' em '+D(p.pagoEm):''):p.vencimento<today?'Vencido':'Pendente'}</small></div><div class="boleto-actions"><strong>${R(p.valor)}</strong><button class="btn tiny ${p.pago?'light':''}" onclick="togglePaid('bol','${p.id}','${p.vencimento}')">${I(p.pago?'checkcircle':'check','sm')} ${p.pago?'Desfazer':'Marcar pago'}</button></div></div>`).join('')}
+  </div>`;
+ }).join('');
+ return `<div class="stat-strip">${stat('Boletos a pagar',pending,'receipt')}${statCount('Parcelas vencidas',overdue,'clock')}${statCount('Neste mês',pendingThisMonth.length,'calendar')}</div>
+ ${card('Meus boletos',cards||`<div class="empty">${I('receipt')}<div>Nenhum boleto cadastrado.</div></div>`,`<button class="btn tiny" onclick="openBoletoEditor()">${I('plus','sm')} Novo boleto</button>`)}
+ <p class="mini-summary">Cada parcela aparece no calendário, nos gastos e no planejamento mensal. Só é considerada paga quando você confirma.</p>`;
+}
+
+const V={bol:boletoPage,dash:dashboard,rec:gains,spend:expenses,calendar,history,recurr:recurrence,budgets,res:goals,car:cardsPage,div:debts,rel:reports,sim:simulator,settings};
 function open_(html){today=localDate(new Date());$('#mb').innerHTML=html;initMoneyMasks();$('#m').classList.add('open');$('#m').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
 function close_(){$('#m').classList.remove('open');$('#m').setAttribute('aria-hidden','true');document.body.style.overflow='';}
 function er(t){let n=$('#er');if(!n){n=document.createElement('p');n.id='er';n.className='login-error';$('#mb').append(n)}n.textContent=t}
@@ -810,6 +978,7 @@ function openAddMenu(){
  <div class="rayo-add-menu">
   <button class="rayo-add-option" onclick="openQuick('var')"><span class="rayo-add-ico">${I('trenddown')}</span><span><strong>Adicionar gasto</strong><small>Fixo ou variável</small></span></button>
   <button class="rayo-add-option" onclick="openQuick('rec')"><span class="rayo-add-ico">${I('trendup')}</span><span><strong>Adicionar ganho</strong><small>Recebido ou previsto</small></span></button>
+  <button class="rayo-add-option" onclick="openBoletoEditor()"><span class="rayo-add-ico">${I('receipt')}</span><span><strong>Adicionar boleto</strong><small>À vista ou parcelado, com vencimentos</small></span></button>
   <button class="rayo-add-option" onclick="openFiscalMenu()"><span class="rayo-add-ico">${I('receipt')}</span><span><strong>Escanear nota fiscal</strong><small>Tire uma foto e confira o valor reconhecido</small></span></button>
  </div>`);
 }
@@ -1236,6 +1405,7 @@ function togglePaid(kind,id,date){const y=date.slice(0,7);let x,old=false;
  if(['rec','fix','var'].includes(kind)){x=S[kind].find(v=>v.id===id);if(!x)return;old=statusOf(kind,x,date);x.pm=x.pm||{};x.pm[x.freq==='semanal'?date:y]=!old;x.managed=true;}
  else if(kind==='fat'){x=S.car.find(v=>v.id===id);if(!x)return;x.pm=x.pm||{};x.pm[y]=!x.pm[y];}
  else if(kind==='div'){x=S.div.find(v=>v.id===id);if(!x)return;const offset=mi(y)-mi(x.data.slice(0,7));old=has(x.pm,y)?!!x.pm[y]:offset<Number(x.pagas||0);x.pm=x.pm||{};x.pm[y]=!old;/* Number of installments initially paid is preserved; per-month marks live in pm. */}
+ else if(kind==='bol'){x=(S.bol||[]).flatMap(b=>b.parcelas||[]).find(p=>p.id===id);if(!x)return;x.pago=!x.pago;x.pagoEm=x.pago?localDate(new Date()):'';}
  else return;
  save();go();}
 function deleteEntry(kind,id,date){const x=S[kind]?.find(v=>v.id===id);if(!x)return;const recurring=['rec','fix','var'].includes(kind)&&x.freq&&x.freq!=='unica';open_(`${modalHeader('Excluir lançamento','Esta ação não pode ser desfeita.')}<p>${E(x.desc||x.nome||'Lançamento')}</p><div class="modal-footer" style="flex-direction:column">${recurring?`<button class="btn light" onclick="deleteOccurrence('${kind}','${id}','${date}')">Excluir apenas esta ocorrência</button>`:''}<button class="btn d" onclick="deleteForever('${kind}','${id}')">${recurring?'Excluir toda a recorrência':'Excluir definitivamente'}</button><button class="btn light" onclick="close_()">Cancelar</button></div>`)}
@@ -1260,7 +1430,7 @@ function deleteInitialBalance(){delete S.settings.startBalance;delete S.settings
 function setTheme(theme){setAppearanceOption('mode',theme)}
 function backupDados(){const data={versao:2,exportadoEm:new Date().toISOString(),perfil:authUser,dados:S};downloadFile('backup-meu-controle-'+authUser+'.json',JSON.stringify(data,null,2),'application/json')}
 function downloadFile(name,contents,type){const blob=new Blob([contents],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
-function exportCSV(){const rows=[['Tipo','Descrição','Valor','Data','Categoria','Recorrência']];for(const kind of ['rec','fix','var'])for(const i of S[kind])rows.push([kind==='rec'?'Ganho':kind==='fix'?'Gasto fixo':'Gasto variável',i.desc,i.valor,i.data,i.cat,i.freq||'Única']);for(const i of S.cmp)rows.push(['Compra no cartão',i.desc,i.valor,i.data,'Cartão',i.parc+'x']);for(const i of S.res)rows.push(['Reserva',i.nome,i.atual,'','Meta: '+i.meta,'']);const cell=v=>{let x=String(v??'');if(/^\s*[=+@\-]/.test(x))x="'"+x;return '"'+x.replace(/"/g,'""')+'"'};downloadFile('meu-controle-financeiro.csv','\ufeff'+rows.map(r=>r.map(cell).join(';')).join('\n'),'text/csv;charset=utf-8')}
+function exportCSV(){const rows=[['Tipo','Descrição','Valor','Data','Categoria','Recorrência']];for(const kind of ['rec','fix','var'])for(const i of S[kind])rows.push([kind==='rec'?'Ganho':kind==='fix'?'Gasto fixo':'Gasto variável',i.desc,i.valor,i.data,i.cat,i.freq||'Única']);for(const b of S.bol||[])for(const p of b.parcelas||[])rows.push(['Boleto',b.nome||'Boleto',p.valor,p.vencimento,b.cat||'Outros',`Parcela ${p.numero}/${b.parcelas.length} · ${p.pago?'Pago':'Pendente'}`]);for(const i of S.cmp)rows.push(['Compra no cartão',i.desc,i.valor,i.data,'Cartão',i.parc+'x']);for(const i of S.res)rows.push(['Reserva',i.nome,i.atual,'','Meta: '+i.meta,'']);const cell=v=>{let x=String(v??'');if(/^\s*[=+@\-]/.test(x))x="'"+x;return '"'+x.replace(/"/g,'""')+'"'};downloadFile('meu-controle-financeiro.csv','\ufeff'+rows.map(r=>r.map(cell).join(';')).join('\n'),'text/csv;charset=utf-8')}
 function startUI(){resetVisualIdentity();setInterval(()=>{const newDay=localDate(new Date());if(newDay!==today){today=newDay;if(authToken)go()}},60000);setInterval(refreshFromCloud,30000);window.addEventListener('focus',refreshFromCloud);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshFromCloud()});$('#ym').onchange=e=>e.target.value&&setMonth(e.target.value);$('#m').onclick=e=>{if(e.target.id==='m')close_()};document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#m').classList.contains('open'))close_()});window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{if(authToken&&appearance().mode==='auto')applyAppearance()});authBoot()}
 startUI();
 </script></body></html>
