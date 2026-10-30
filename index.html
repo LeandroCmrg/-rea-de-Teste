@@ -166,6 +166,12 @@ aside::-webkit-scrollbar{width:9px}aside::-webkit-scrollbar-thumb{background:var
 @keyframes rayo-spin{to{transform:rotate(360deg)}}
 .rayo-receipt-note{font-size:12px;color:var(--muted);line-height:1.6}
 .rayo-receipt-raw{font-size:11px;white-space:pre-wrap;word-break:break-word;max-height:145px;overflow:auto;background:var(--surface2);border-radius:12px;padding:10px;color:var(--muted)}
+/* RAYO Labs: navegação móvel reduzida a 3 botões */
+@media(max-width:740px){
+ nav.bottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;align-items:center;justify-items:center;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+ nav.bottom>button:not(.quick){width:100%;max-width:130px;justify-self:center;min-width:0;min-height:43px;font-size:11px}
+ nav.bottom>button.quick{margin:-14px auto 0;min-width:51px;width:51px;height:51px;justify-self:center;z-index:2}
+}
 </style></head><body class="auth-locked">
 <section id="loginScreen" class="login-screen" aria-label="Login"><div class="login-box"><div class="login-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></div><h1>rayo<span class="brand-dot">.</span></h1><p>Suas finanças, sem complicar.</p><form id="loginForm"><label for="loginWho">Usuário</label><input id="loginWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Seu nome de usuário" required><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required><button class="btn" id="loginButton" type="submit">Entrar</button><p class="auth-switch">Ainda não tem uma conta? <button type="button" class="auth-link" onclick="switchAuthView('register')">Criar minha conta</button></p></form><form id="registerForm" hidden><p class="register-lede">Seu espaço financeiro privado, com dados salvos na nuvem.</p><label for="registerWho">Escolha seu usuário</label><input id="registerWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Ex.: leandro.silva" required><small class="form-hint">3 a 32 caracteres, sem espaços. Letras, números, ponto, hífen e _.</small><label for="registerPassword">Crie uma senha</label><input id="registerPassword" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Pelo menos 12 caracteres" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><label for="registerConfirmation">Confirme sua senha</label><input id="registerConfirmation" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Digite a senha novamente" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><p class="pw-hint" id="registerMatch" aria-live="polite">As duas senhas devem ser iguais.</p><button class="btn" type="submit" id="registerButton">Criar minha conta</button><p class="auth-switch">Já tem uma conta? <button class="auth-link" type="button" onclick="switchAuthView('login')">Fazer login</button></p></form><div id="loginMessage" aria-live="polite"></div></div></section>
 <aside aria-label="Navegação"><div class="brand"><span class="brand-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></span><span class="brand-name">rayo<span class="brand-dot">.</span></span></div><div id="sn"></div><div class="side-bottom" aria-hidden="true"></div></aside>
@@ -467,7 +473,7 @@ const PALETTES={
 };
 const DEFAULT_HOME=['saldo','ganhos','gastos','projecao'];
 const HOME_NAMES={saldo:'Disponível',ganhos:'Ganhos',gastos:'Gastos',projecao:'Projeção'};
-const DEFAULT_SHORTCUTS=['dash','rec','spend','calendar'];
+const DEFAULT_SHORTCUTS=['dash'];
 const PRIMARY_PAGES=['dash','rec','spend','calendar'];
 const APPEARANCE_DEFAULTS={palette:'azul',mode:'light',backgroundStyle:'colored',iconStyle:'minimal',density:'comfortable',privacy:false,homeCards:DEFAULT_HOME,hiddenSections:[],quickTabs:DEFAULT_SHORTCUTS};
 function appearance(){return {...APPEARANCE_DEFAULTS,...(S.settings?.appearance||{})}}
@@ -516,8 +522,7 @@ function updateAppearanceList(field,value,action){
   else {const i=arr.indexOf(value),j=i+(action==='up'?-1:1);if(i<0||j<0||j>=arr.length)return;[arr[i],arr[j]]=[arr[j],arr[i]];}
  }else if(field==='hiddenSections')arr=arr.includes(value)?arr.filter(x=>x!==value):[...arr,value];
  else if(field==='quickTabs'){
-  if(arr.includes(value)){if(arr.length<=1)return;arr=arr.filter(x=>x!==value)}
-  else {if(arr.length>=4)return alert('Você pode selecionar até quatro atalhos.');arr.push(value)}
+  arr=[value]
  }
  S.settings={...S.settings,appearance:{...a,[field]:arr}};save();go();
 }
@@ -596,12 +601,10 @@ function openPage(p){tab=p;go();window.scrollTo({top:0,behavior:'smooth'})}
 function nav(){
  const a=appearance(),hidden=a.hiddenSections||[],primary=NAV.slice(0,5).filter(n=>!hidden.includes(n[0])),others=NAV.slice(5).filter(n=>!hidden.includes(n[0]));
  $('#sn').innerHTML=`<div class="nav-heading">Principal</div><div class="nav-group">${primary.map(n=>navButton(n)).join('')}</div><div class="nav-heading">Mais opções</div><div class="nav-group">${others.map(n=>navButton(n)).join('')}</div>`;
- const quick=(Array.isArray(a.quickTabs)&&a.quickTabs.length?a.quickTabs:DEFAULT_SHORTCUTS).filter(k=>NAV.some(n=>n[0]===k)).slice(0,4);
- const before=quick.slice(0,2),after=quick.slice(2);
-  const navItem=n=>`<button class="${n[0]===tab?'on':''} ${n[0]==='more'&&!quick.includes(tab)?'on':''}" aria-label="${E(n[0]==='more'?'Mais':n[2])}" title="${E(n[0]==='more'?'Mais':n[2])}" onclick="${n[0]==='more'?'openMoreMenu()':`openPage('${n[0]}')`}">${I(n[1])}<span>${E(n[2])}</span></button>`;
-  const left=before.map(p=>NAV.find(n=>n[0]===p)).map(navItem).join('');
-  const right=[...after.map(p=>NAV.find(n=>n[0]===p)),['more','dots','Mais']].map(navItem).join('');
-  $('#bn').innerHTML=`<div class="nav-half nav-left">${left}</div><button class="quick" aria-label="Adicionar lançamento" title="Adicionar lançamento" onclick="openAddMenu()">${I('plus')}</button><div class="nav-half nav-right">${right}</div>`;
+ const quick=(Array.isArray(a.quickTabs)&&a.quickTabs.length?a.quickTabs:DEFAULT_SHORTCUTS).filter(k=>NAV.some(n=>n[0]===k)).slice(0,1);
+ const first=NAV.find(n=>n[0]===(quick[0]||'dash'))||NAV.find(n=>n[0]==='dash');
+ const navItem=n=>`<button class="${n[0]===tab?'on':''} ${n[0]==='more'&&!quick.includes(tab)?'on':''}" aria-label="${E(n[0]==='more'?'Mais':n[2])}" title="${E(n[0]==='more'?'Mais':n[2])}" onclick="${n[0]==='more'?'openMoreMenu()':`openPage('${n[0]}')`}">${I(n[1])}<span>${E(n[2])}</span></button>`;
+ $('#bn').innerHTML=`${navItem(first)}<button class="quick" aria-label="Adicionar lançamento" title="Adicionar lançamento" onclick="openAddMenu()">${I('plus')}</button>${navItem(['more','dots','Mais'])}`;
 }
 function navButton(n){return `<button class="nav-btn ${tab===n[0]?'on':''}" onclick="openPage('${n[0]}')">${I(n[1])}${E(n[2])}</button>`}
 function openMoreMenu(){
@@ -669,13 +672,14 @@ function settings(){
  const backgroundModes=`<div class="segmented appearance-segment" role="group" aria-label="Fundo do aplicativo">${[['standard','Padrão · preto/branco'],['colored','Colorido']].map(([v,l])=>`<button class="${opts.backgroundStyle===v?'active':''}" aria-pressed="${opts.backgroundStyle===v}" onclick="setAppearanceOption('backgroundStyle','${v}')">${l}</button>`).join('')}</div>`;
  const densityModes=`<div class="segmented appearance-segment">${[['comfortable','Confortável'],['compact','Compacto']].map(([v,l])=>`<button class="${opts.density===v?'active':''}" onclick="setAppearanceOption('density','${v}')">${l}</button>`).join('')}</div>`;
  const home=[...(opts.homeCards||DEFAULT_HOME),...DEFAULT_HOME.filter(id=>!(opts.homeCards||DEFAULT_HOME).includes(id))].map(id=>`<div class="personalize-row"><label class="personal-check"><input type="checkbox" ${opts.homeCards.includes(id)?'checked':''} onchange="updateAppearanceList('homeCards','${id}','toggle')"> ${HOME_NAMES[id]}</label><div class="row-actions"><button class="mini-action" title="Mover para cima" aria-label="Mover ${HOME_NAMES[id]} para cima" onclick="updateAppearanceList('homeCards','${id}','up')">${I('chevronleft','sm')}</button><button class="mini-action" title="Mover para baixo" aria-label="Mover ${HOME_NAMES[id]} para baixo" onclick="updateAppearanceList('homeCards','${id}','down')">${I('chevronright','sm')}</button></div></div>`).join('');
- const quick=PRIMARY_PAGES.concat(['sim','history','budgets','res','car','rel','recurr','div']).map(id=>{const n=NAV.find(x=>x[0]===id);return `<label class="shortcut-chip ${opts.quickTabs.includes(id)?'chosen':''}"><input type="checkbox" ${opts.quickTabs.includes(id)?'checked':''} onchange="updateAppearanceList('quickTabs','${id}','toggle')">${I(n[1],'sm')} ${E(n[2])}</label>`}).join('');
+ const activeShortcut=(Array.isArray(opts.quickTabs)&&opts.quickTabs.length?opts.quickTabs:DEFAULT_SHORTCUTS)[0];
+ const quick=PRIMARY_PAGES.concat(['sim','history','budgets','res','car','rel','recurr','div']).map(id=>{const n=NAV.find(x=>x[0]===id);return `<label class="shortcut-chip ${activeShortcut===id?'chosen':''}"><input type="checkbox" ${activeShortcut===id?'checked':''} onchange="updateAppearanceList('quickTabs','${id}','toggle')">${I(n[1],'sm')} ${E(n[2])}</label>`}).join('');
  const hide=NAV.filter(n=>!['dash','settings'].includes(n[0])).map(n=>`<label class="shortcut-chip"><input type="checkbox" ${!opts.hiddenSections.includes(n[0])?'checked':''} onchange="updateAppearanceList('hiddenSections','${n[0]}','toggle')"> ${E(n[2])}</label>`).join('');
  const customList=['rec','fix','var'].flatMap(kind=>(custom[kind]||[]).map((c,idx)=>`<div class="settings-row"><span class="category-mini"><i style="background:${E(c.color||'#315774')}"></i> ${E(c.emoji||'')} ${E(c.name)} <small>${kindNames[kind]}</small></span><button class="mini-action" aria-label="Excluir categoria ${E(c.name)}" onclick="removeCategory('${kind}',${idx})">${I('trash','sm')}</button></div>`)).join('');
  return `<div class="settings-page">
  ${card('Aparência',`<div class="appearance-caption">Cor do RAYO</div><div class="palette-grid">${themeSwatches}</div><div class="appearance-caption">Fundo do aplicativo</div>${backgroundModes}<div class="appearance-caption">Ícones</div>${iconModes}<div class="appearance-caption">Modo</div>${themeModes}<div class="appearance-caption">Espaçamento</div>${densityModes}<div class="appearance-reset"><button class="btn light tiny" onclick="restoreAppearance()">${I('repeat','sm')} Restaurar padrão</button></div>`)}
  ${card('Página inicial',`<p class="quiet">Escolha os cartões e a ordem em que aparecem.</p><div class="home-options">${home}</div>`)}
- ${card('Navegação do celular',`<p class="quiet">Escolha até quatro atalhos. Os três pontos sempre mostram todas as páginas.</p><div class="shortcut-grid">${quick}</div>`)}
+ ${card('Navegação do celular',`<p class="quiet">Escolha um atalho fixo. A barra terá exatamente 3 botões: atalho, <b>+</b> central e <b>Mais</b>.</p><div class="shortcut-grid">${quick}</div>`)}
  ${card('Privacidade',`<div class="settings-row"><div><strong>Ocultar valores</strong><br><small>Mostrar valores como •••••.</small></div><button class="btn light tiny" onclick="setAppearanceOption('privacy',null)">${I(opts.privacy?'eyeoff':'eye','sm')} ${opts.privacy?'Mostrar':'Ocultar'}</button></div>`)}
  ${card('Categorias',`${customList||'<p class="quiet">Use suas próprias categorias para novos lançamentos.</p>'}<button class="btn light tiny" onclick="openAddCategory()">${I('plus','sm')} Nova categoria</button>`)}
  ${card('Menu lateral',`<p class="quiet">Marque o que deseja mostrar no computador. Todas as abas seguem disponíveis em “Mais”.</p><div class="shortcut-grid">${hide}</div>`)}
@@ -772,28 +776,33 @@ const parseReceiptMoney=s=>{
 };
 function parseReceipt(text){
  const lines=String(text||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
- let total=null,score=-100;
+ const normalizeLine=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/\bT[O0]TA[L1I]\b/g,'TOTAL');
+ const excluded=/CNPJ|CPF|TROCO|DESCONTO|SUB\s*TOTAL|TOTAL\s+DE\s+ITENS|TOTAL\s+DOS\s+ITENS|TRIBUT|QTD|QUANTIDADE|UNITARIO|V\.\s*UNIT|CODIGO|ITEM\s+TOTAL|VL\.?\s*TOTAL/;
+ const amounts=line=>[...String(line||'').matchAll(/(?:R\$\s*)?(\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2})/gi)].map(m=>parseReceiptMoney(m[0])).filter(n=>n!==null);
+ let best={amount:null,score:-1,line:''};
  for(let i=0;i<lines.length;i++){
-  const line=lines[i],norm=line.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
-  if(/CNPJ|CPF|TROCO|DESCONTO|SUB\s*TOTAL|TRIBUT|QTD|QUANTIDADE|UNITARIO|V\.\s*UNIT|CODIGO|ITEM\s+TOTAL/.test(norm))continue;
-  let rank=0;
-  if(/TOTAL\s*(A\s*PAGAR|DA\s*NOTA|DO\s*CUPOM)|VALOR\s+TOTAL|TOTAL\s+GERAL|VALOR\s+PAGO|LIQUIDO\s+A\s+PAGAR/.test(norm))rank=15;
-  else if(/(^|\s)TOTAL(\s|:|R\$|$)/.test(norm))rank=10;
-  else if(/PAGAMENTO|PAGO|PIX|CARTAO/.test(norm))rank=3;
-  const amounts=[...line.matchAll(/(?:R\$\s*)?(\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2})/gi)].map(m=>parseReceiptMoney(m[0])).filter(n=>n!==null);
-  for(const n of amounts){if(rank>score||(rank===score&&i>0)){total=n;score=rank}}
+  const line=lines[i],next=lines[i+1]||'',norm=normalizeLine(line),normNext=normalizeLine(next);
+  if(excluded.test(norm))continue;
+  const values=amounts(line),nextValues=amounts(next);
+  let score=0,amount=null,source='';
+  if(/(^|\s)TOTAL(?:\s|:|R\$|$)/.test(norm)&&values.length){score=/^TOTAL(?:\s|:|R\$|$)/.test(norm)?100:96;amount=values[values.length-1];source=line;}
+  else if(/^TOTAL\b/.test(norm)&&!values.length&&nextValues.length&&!excluded.test(normNext)){score=94;amount=nextValues[nextValues.length-1];source=line+' '+next;}
+  else if(/VALOR\s+TOTAL|TOTAL\s+GERAL|VALOR\s+(A\s*PAGAR|PAGO)|LIQUIDO\s+A\s+PAGAR/.test(norm)&&values.length){score=90;amount=values[values.length-1];source=line;}
+  else if(/VALOR\s+(DO\s+)?(?:DEBITO|CREDITO)|VALOR\s*:/.test(norm)&&values.length){score=50;amount=values[values.length-1];source=line;}
+  else if(/PAGAMENTO\s+TOTAL|TOTAL\s+PAGO/.test(norm)&&values.length){score=70;amount=values[values.length-1];source=line;}
+  if(amount!==null&&score>best.score){best={amount,score,line:source};}
  }
  let date=today;
  for(const line of lines){
-  const d=line.match(/(?:^|\D)(\d{2})[/.\-](\d{2})[/.\-](\d{4})(?:\D|$)/);
+  const d=line.match(/(?:^|\D)(\d{2})[/\.\-](\d{2})[/\.\-](\d{4})(?:\D|$)/);
   if(!d)continue;
   const candidate=`${d[3]}-${d[2]}-${d[1]}`;
   if(validDate(candidate)&&candidate<='2100-12-31'&&candidate>='2000-01-01'){date=candidate;break}
  }
- const merchant=lines.slice(0,9).find(line=>line.length>3&&line.length<75&&!/CNPJ|CPF|DANFE|DOCUMENTO|AUXILIAR|NOTA FISCAL|CUPOM|ENDERECO|RUA\s|AVENIDA|EXTRATO|TELEFONE|www\.|https?:|\d{2}[/.\-]\d{2}[/.\-]\d{4}/i.test(line))||'Compra com nota fiscal';
+ const merchant=lines.slice(0,9).find(line=>line.length>3&&line.length<75&&!/CNPJ|CPF|DANFE|DOCUMENTO|AUXILIAR|NOTA FISCAL|CUPOM|ENDERECO|RUA\s|AVENIDA|EXTRATO|TELEFONE|www\.|https?:|\d{2}[/\.\-]\d{2}[/\.\-]\d{4}/i.test(line))||'Compra com nota fiscal';
  const description=merchant.replace(/[<>"'`]/g,'').slice(0,120);
  const catGuess=recommendCategory(description+' '+text.slice(0,500),'var');
- return {amount:total||'',date,desc:description,cat:getCats('var').includes(catGuess)?catGuess:'Outros',raw:text};
+ return {amount:best.amount??'',date,desc:description,cat:getCats('var').includes(catGuess)?catGuess:'Outros',raw:text,totalLine:best.line||''};
 }
 async function processReceiptImage(event){
  const file=event.target.files?.[0];event.target.value='';if(!file)return;
@@ -824,6 +833,7 @@ function showReceiptReview(data,warning=''){
   <div class="field full">${FIELD('Estabelecimento / descrição',`<input id="receiptDesc" maxlength="120" value="${E(data.desc||'Compra com nota fiscal')}" required>` )}</div>
  </div>
  <p class="rayo-status-hint">A nota gera um único lançamento pelo valor total da compra, sem repetir cada produto. Datas futuras entram como previstas automaticamente.</p>
+ ${data.totalLine?`<p class="rayo-receipt-note">Linha identificada como total: <b>${E(data.totalLine.slice(0,120))}</b></p>`:''}
  ${data.raw?`<details><summary class="rayo-receipt-note">Ver texto reconhecido</summary><pre class="rayo-receipt-raw">${E(data.raw.slice(0,3000))}</pre></details>`:''}
  <div class="modal-footer"><button class="btn light" onclick="openReceiptMenu()">Outra foto</button><button class="btn" onclick="saveReceiptExpense()">${I('check','sm')} Salvar gasto variável</button></div>`);
 }
