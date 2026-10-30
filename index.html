@@ -280,13 +280,25 @@ body.rayo-modal-lock{position:fixed!important;inset:var(--rayo-lock-top,0px) 0 a
  nav.bottom>button.quick{margin:0 auto!important;top:0!important;transform:none!important;align-self:center!important;justify-self:center!important;width:51px!important;height:51px!important;min-width:51px!important;max-width:51px!important;position:relative!important}
  nav.bottom .nav-half{align-items:center!important}
 }
+
+/* RAYO Labs v0.4.2 — botão + mobile com a MESMA forma do desktop */
+@media(max-width:740px){
+ nav.bottom>button.btn.add-icon-btn.quick{
+  display:inline-flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;
+  width:40px!important;min-width:40px!important;max-width:40px!important;height:40px!important;min-height:40px!important;
+  padding:0!important;gap:0!important;margin:0 auto!important;top:auto!important;transform:none!important;position:relative!important;
+  border-radius:14px!important;background:var(--fab-bg)!important;color:var(--fab-fg)!important;
+  border:1px solid var(--fab-border)!important;box-shadow:none!important;
+ }
+ nav.bottom>button.btn.add-icon-btn.quick>svg.ico.lg{width:24px!important;height:24px!important;stroke-width:2!important}
+}
 </style></head><body class="auth-locked">
 <section id="loginScreen" class="login-screen" aria-label="Login"><div class="login-box"><div class="login-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></div><h1>rayo<span class="brand-dot">.</span></h1><p>Suas finanças, sem complicar.</p><form id="loginForm"><label for="loginWho">Usuário</label><input id="loginWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Seu nome de usuário" required><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required><button class="btn" id="loginButton" type="submit">Entrar</button><p class="auth-switch">Ainda não tem uma conta? <button type="button" class="auth-link" onclick="switchAuthView('register')">Criar minha conta</button></p></form><form id="registerForm" hidden><p class="register-lede">Seu espaço financeiro privado, com dados salvos na nuvem.</p><label for="registerWho">Escolha seu usuário</label><input id="registerWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Ex.: leandro.silva" required><small class="form-hint">3 a 32 caracteres, sem espaços. Letras, números, ponto, hífen e _.</small><label for="registerPassword">Crie uma senha</label><input id="registerPassword" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Pelo menos 12 caracteres" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><label for="registerConfirmation">Confirme sua senha</label><input id="registerConfirmation" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Digite a senha novamente" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><p class="pw-hint" id="registerMatch" aria-live="polite">As duas senhas devem ser iguais.</p><button class="btn" type="submit" id="registerButton">Criar minha conta</button><p class="auth-switch">Já tem uma conta? <button class="auth-link" type="button" onclick="switchAuthView('login')">Fazer login</button></p></form><div id="loginMessage" aria-live="polite"></div></div></section>
 <aside aria-label="Navegação"><div class="brand"><span class="brand-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></span><span class="brand-name">rayo<span class="brand-dot">.</span></span></div><div id="sn"></div><div class="side-bottom" aria-hidden="true"></div></aside>
-<main><header class="main-head"><div class="head-title"><div class="eyebrow" id="eyebrow"></div><h1 id="ti">Visão geral</h1></div><div class="month-control"><button class="mini-action" aria-label="Mês anterior" onclick="moveMonth(-1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><input type="month" id="ym" aria-label="Mês selecionado"><button class="mini-action" aria-label="Próximo mês" onclick="moveMonth(1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div><button class="btn add-icon-btn" id="quickHeader" onclick="openAddMenu()" aria-label="Novo lançamento" title="Novo lançamento"><svg class="ico lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="head-user"><span class="user-badge" id="userBadge">U</span><span id="sessionName" class="user-name" style="font-weight:650"></span><span class="cloud-status" id="cloudStatus" role="status" aria-live="polite" title="Situação dos dados na nuvem">☁ Nuvem conectada</span><button class="mini-action" title="Meu perfil" onclick="openMyProfile()"><svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button></div></header><div id="v"></div><footer class="rayo-labs-footer">RAYO Labs · v0.4.1 Beta</footer></main>
+<main><header class="main-head"><div class="head-title"><div class="eyebrow" id="eyebrow"></div><h1 id="ti">Visão geral</h1></div><div class="month-control"><button class="mini-action" aria-label="Mês anterior" onclick="moveMonth(-1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><input type="month" id="ym" aria-label="Mês selecionado"><button class="mini-action" aria-label="Próximo mês" onclick="moveMonth(1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div><button class="btn add-icon-btn" id="quickHeader" onclick="openAddMenu()" aria-label="Novo lançamento" title="Novo lançamento"><svg class="ico lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="head-user"><span class="user-badge" id="userBadge">U</span><span id="sessionName" class="user-name" style="font-weight:650"></span><span class="cloud-status" id="cloudStatus" role="status" aria-live="polite" title="Situação dos dados na nuvem">☁ Nuvem conectada</span><button class="mini-action" title="Meu perfil" onclick="openMyProfile()"><svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button></div></header><div id="v"></div><footer class="rayo-labs-footer">RAYO Labs · v0.4.2 Beta</footer></main>
 <nav id="bn" class="bottom" aria-label="Navegação inferior"></nav><div id="m" class="modal" role="dialog" aria-modal="true" aria-hidden="true"><div id="mb" class="modal-panel"></div></div><script>const KEY="mcf_v1"; // Os dados anteriores continuam guardados no navegador como backup.
-const APP_VERSION="rayo-labs-v0.4.1-20261030";
-const RAYO_LABS_VERSION="v0.4.1 Beta";
+const APP_VERSION="rayo-labs-v0.4.2-20261030";
+const RAYO_LABS_VERSION="v0.4.2 Beta";
 const def=()=>({rec:[],fix:[],var:[],car:[],cmp:[],div:[],bol:[],res:[],budgets:[],favs:[],reserveHistory:[],settings:{}});
 const normalizeS=data=>{
  const a=Object.assign(def(),data&&typeof data==='object'?data:{});
@@ -723,7 +735,7 @@ function nav(){
  const quick=[...new Set([...saved,...DEFAULT_SHORTCUTS])].slice(0,3);
  const before=quick.slice(0,2),after=quick.slice(2,3);
  const navItem=n=>`<button class="${n[0]===tab?'on':''} ${n[0]==='more'&&!quick.includes(tab)?'on':''}" aria-label="${E(n[0]==='more'?'Mais':n[2])}" title="${E(n[0]==='more'?'Mais':n[2])}" onclick="${n[0]==='more'?'openMoreMenu()':`openPage('${n[0]}')`}">${I(n[1])}<span>${E(n[2])}</span></button>`;
- $('#bn').innerHTML=`<div class="nav-half nav-left">${before.map(p=>navItem(NAV.find(n=>n[0]===p))).join('')}</div><button class="quick" aria-label="Adicionar lançamento" title="Adicionar lançamento" onclick="openAddMenu()">${I('plus')}</button><div class="nav-half nav-right">${[...after.map(p=>NAV.find(n=>n[0]===p)),['more','dots','Mais']].map(navItem).join('')}</div>`;
+ $('#bn').innerHTML=`<div class="nav-half nav-left">${before.map(p=>navItem(NAV.find(n=>n[0]===p))).join('')}</div><button class="btn add-icon-btn quick" aria-label="Adicionar lançamento" title="Adicionar lançamento" onclick="openAddMenu()">${document.getElementById('quickHeader')?.innerHTML||I('plus')}</button><div class="nav-half nav-right">${[...after.map(p=>NAV.find(n=>n[0]===p)),['more','dots','Mais']].map(navItem).join('')}</div>`;
 }
 function navButton(n){return `<button class="nav-btn ${tab===n[0]?'on':''}" onclick="openPage('${n[0]}')">${I(n[1])}${E(n[2])}</button>`}
 function openMoreMenu(){
@@ -1462,8 +1474,8 @@ function openQuick(kind='var',dateOverride=null,favId=null,editId=null){
  const checked=source?statusOf(kind,source,date):date<=today;
  const mode=source?.statusMode==='auto'?'auto':source?(checked?'1':'0'):'auto';
  const method=source?.method||fav?.method||'Pix';
- open_(`${modalHeader(editId?'Editar lançamento':'Novo lançamento','Preencha apenas o essencial.')}
- <div class="segmented" style="display:flex;margin-bottom:17px"><button class="${kind==='var'||kind==='fix'?'active':''}" style="flex:1" onclick="openQuick('var','${date}')">${I('arrowup','sm')} Gasto</button><button class="${kind==='rec'?'active':''}" style="flex:1" onclick="openQuick('rec','${date}')">${I('arrowdown','sm')} Ganho</button></div>
+ open_(`${modalHeader(editId?(kind==='rec'?'Editar ganho':'Editar gasto'):(kind==='rec'?'Novo ganho':'Novo gasto'),'Preencha apenas o essencial.')}
+ ${kind==='rec'?'':`<div class="segmented" style="display:flex;margin-bottom:17px"><button class="active" style="flex:1" type="button">${I('arrowup','sm')} Gasto</button><button style="flex:1" type="button" onclick="openQuick('rec','${date}')">${I('arrowdown','sm')} Ganho</button></div>`}
  <div class="field-grid"><div class="field full">${FIELD('Valor (R$)',`<input id="qValor" type="number" step="0.01" min="0.01" inputmode="decimal" value="${E(val)}" placeholder="R$ 0,00" required>`)}</div>
  ${FIELD('Categoria',`<select id="qCat">${selectOpts(getCats(kind),cat)}</select>`)}
  ${FIELD('Data',`<input id="qDate" type="date" value="${E(date)}" onchange="updateQuickStatusHint();if(document.getElementById('qMethod')?.value==='Boleto')renderQuickBoletoDates();" required>`)}
@@ -1472,15 +1484,23 @@ function openQuick(kind='var',dateOverride=null,favId=null,editId=null){
  <div id="qPaymentDetails" class="field full quick-payment-panel" aria-live="polite"></div>`}
  <div class="field full" id="qExtraToggle"><button class="btn light tiny" onclick="toggleQuickExtra()">${I('sliders','sm')} Mais opções ${I('down','sm')}</button></div>
  <div id="qExtra" data-expanded="${source?.freq&&source.freq!=='unica'?'true':'false'}" class="field-grid full ${source?.freq&&source.freq!=='unica'?'':'hidden'}">
- ${FIELD('Tipo de lançamento',`<select id="qKind" onchange="quickChangeKind(this.value)">${selectOpts([['var','Gasto variável'],['fix','Gasto fixo'],['rec','Ganho']],kind)}</select>`)}
+ ${kind==='rec'?'':FIELD('Tipo de gasto',`<select id="qKind" onchange="quickChangeKind(this.value)">${selectOpts([['var','Gasto variável'],['fix','Gasto fixo']],kind)}</select>`) }
  ${FIELD('Repetição',`<select id="qFreq" onchange="document.getElementById('qEndWrap').classList.toggle('hidden',this.value==='unica')">${selectOpts([['unica','Uma vez'],['semanal','Toda semana'],['mensal','Todo mês'],['anual','Todo ano']],freq)}</select>`)}
  <div id="qEndWrap" class="field ${freq==='unica'?'hidden':''}">${FIELD('Repetir até <span class="optional">(opcional)</span>',`<input type="date" id="qEnd" value="${E(source?.endDate||'')}">`)}</div>
- ${FIELD('Situação',`<select id="qPaid" onchange="updateQuickStatusHint()"><option value="auto" ${mode==='auto'?'selected':''}>Automática pela data</option><option value="1" ${mode==='1'?'selected':''}>${kind==='rec'?'Recebido':'Pago'}</option><option value="0" ${mode==='0'?'selected':''}>${kind==='rec'?'Previsto':'Pendente'}</option></select>`)}
+ <div class="field full"><button class="btn light tiny" type="button" id="quickStatusEditButton" aria-expanded="false" aria-controls="quickStatusEdit" onclick="toggleQuickStatusEdit()">${I('edit','sm')} Alterar situação manualmente</button></div>
+ <div class="field full hidden" id="quickStatusEdit">${FIELD('Situação',`<select id="qPaid" onchange="updateQuickStatusHint()"><option value="auto" ${mode==='auto'?'selected':''}>Automática pela data</option><option value="1" ${mode==='1'?'selected':''}>${kind==='rec'?'Recebido':'Pago'}</option><option value="0" ${mode==='0'?'selected':''}>${kind==='rec'?'Previsto':'Pendente'}</option></select>`)}</div>
  </div></div>
  <p id="quickDateStatusHint" class="rayo-status-hint" aria-live="polite"></p>
  ${isNew?`<label class="checkline" id="qFavLine"><input type="checkbox" id="qFav"> Guardar como favorito</label>`:''}
  <div class="modal-footer"><button class="btn light" onclick="close_()">Cancelar</button><button class="btn" onclick="saveQuick('${kind}','${E(editId||'')}')">${I('check','sm')} ${isNew?'Adicionar':'Salvar alterações'}</button></div>`);
  renderQuickPayment();updateQuickStatusHint();
+}
+function toggleQuickStatusEdit(){
+ const panel=document.getElementById('quickStatusEdit'),button=document.getElementById('quickStatusEditButton');
+ if(!panel||!button)return;
+ const willShow=panel.classList.contains('hidden');
+ panel.classList.toggle('hidden',!willShow);
+ button.setAttribute('aria-expanded',String(willShow));
 }
 function toggleQuickExtra(){
  const panel=document.getElementById('qExtra');if(!panel)return;
