@@ -172,12 +172,35 @@ aside::-webkit-scrollbar{width:9px}aside::-webkit-scrollbar-thumb{background:var
  nav.bottom>button:not(.quick){width:100%;max-width:130px;justify-self:center;min-width:0;min-height:43px;font-size:11px}
  nav.bottom>button.quick{margin:-14px auto 0;min-width:51px;width:51px;height:51px;justify-self:center;z-index:2}
 }
+
+/* Identificação da versão de testes */
+.rayo-labs-footer{text-align:center;color:var(--muted);font-size:11px;margin:28px auto 0;padding:12px}
+.rayo-total-found{background:var(--goodLight);border:1px solid var(--line);border-radius:16px;padding:15px 16px;margin:0 0 16px;display:flex;flex-direction:column;gap:4px}
+.rayo-total-found small{font-size:10px;color:var(--good);font-weight:700;letter-spacing:.045em}
+.rayo-total-found strong{font-size:26px;color:var(--good);font-variant-numeric:tabular-nums}
+
+/* RAYO Labs v0.2.0 — navegação mobile simétrica, 2 atalhos + central + atalho + Mais */
+@media(max-width:740px){
+ nav.bottom{display:grid!important;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr)!important;align-items:center;column-gap:0!important;justify-items:stretch!important;padding-left:max(7px,env(safe-area-inset-left,0px));padding-right:max(7px,env(safe-area-inset-right,0px))}
+ nav.bottom .nav-half{display:flex!important;align-items:center;min-width:0;justify-content:space-evenly;gap:0;min-height:49px}
+ nav.bottom .nav-half button{flex:1 1 0!important;min-width:0!important;max-width:none!important;padding:4px 1px!important;font-size:9px;white-space:nowrap}
+ nav.bottom>button.quick{width:51px!important;height:51px!important;min-width:51px!important;max-width:51px!important;justify-self:center!important;margin:-14px auto 0!important}
+}
+.fiscal-reference{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;margin-top:14px;border:1px solid var(--line);border-radius:13px;background:var(--surface2);flex-wrap:wrap}
+.fiscal-reference span{display:flex;align-items:center;gap:6px;font-weight:650;font-size:12px}
+.fiscal-candidates{border-radius:12px;border:1px solid var(--line);padding:12px;margin-top:13px}
+.fiscal-candidates small,.fiscal-disclaimer{color:var(--muted);font-size:12px;line-height:1.5}
+.fiscal-candidates .row-actions{margin:8px 0 0;gap:6px}
+.fiscal-disclaimer{margin-top:12px}
+#mb input[data-money="true"]{font-variant-numeric:tabular-nums}
+
 </style></head><body class="auth-locked">
 <section id="loginScreen" class="login-screen" aria-label="Login"><div class="login-box"><div class="login-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></div><h1>rayo<span class="brand-dot">.</span></h1><p>Suas finanças, sem complicar.</p><form id="loginForm"><label for="loginWho">Usuário</label><input id="loginWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Seu nome de usuário" required><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required><button class="btn" id="loginButton" type="submit">Entrar</button><p class="auth-switch">Ainda não tem uma conta? <button type="button" class="auth-link" onclick="switchAuthView('register')">Criar minha conta</button></p></form><form id="registerForm" hidden><p class="register-lede">Seu espaço financeiro privado, com dados salvos na nuvem.</p><label for="registerWho">Escolha seu usuário</label><input id="registerWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Ex.: leandro.silva" required><small class="form-hint">3 a 32 caracteres, sem espaços. Letras, números, ponto, hífen e _.</small><label for="registerPassword">Crie uma senha</label><input id="registerPassword" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Pelo menos 12 caracteres" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><label for="registerConfirmation">Confirme sua senha</label><input id="registerConfirmation" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Digite a senha novamente" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><p class="pw-hint" id="registerMatch" aria-live="polite">As duas senhas devem ser iguais.</p><button class="btn" type="submit" id="registerButton">Criar minha conta</button><p class="auth-switch">Já tem uma conta? <button class="auth-link" type="button" onclick="switchAuthView('login')">Fazer login</button></p></form><div id="loginMessage" aria-live="polite"></div></div></section>
 <aside aria-label="Navegação"><div class="brand"><span class="brand-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></span><span class="brand-name">rayo<span class="brand-dot">.</span></span></div><div id="sn"></div><div class="side-bottom" aria-hidden="true"></div></aside>
-<main><header class="main-head"><div class="head-title"><div class="eyebrow" id="eyebrow"></div><h1 id="ti">Visão geral</h1></div><div class="month-control"><button class="mini-action" aria-label="Mês anterior" onclick="moveMonth(-1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><input type="month" id="ym" aria-label="Mês selecionado"><button class="mini-action" aria-label="Próximo mês" onclick="moveMonth(1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div><button class="btn add-icon-btn" id="quickHeader" onclick="openAddMenu()" aria-label="Novo lançamento" title="Novo lançamento"><svg class="ico lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="head-user"><span class="user-badge" id="userBadge">U</span><span id="sessionName" class="user-name" style="font-weight:650"></span><span class="cloud-status" id="cloudStatus" role="status" aria-live="polite" title="Situação dos dados na nuvem">☁ Nuvem conectada</span><button class="mini-action" title="Meu perfil" onclick="openMyProfile()"><svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button></div></header><div id="v"></div></main>
+<main><header class="main-head"><div class="head-title"><div class="eyebrow" id="eyebrow"></div><h1 id="ti">Visão geral</h1></div><div class="month-control"><button class="mini-action" aria-label="Mês anterior" onclick="moveMonth(-1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><input type="month" id="ym" aria-label="Mês selecionado"><button class="mini-action" aria-label="Próximo mês" onclick="moveMonth(1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div><button class="btn add-icon-btn" id="quickHeader" onclick="openAddMenu()" aria-label="Novo lançamento" title="Novo lançamento"><svg class="ico lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="head-user"><span class="user-badge" id="userBadge">U</span><span id="sessionName" class="user-name" style="font-weight:650"></span><span class="cloud-status" id="cloudStatus" role="status" aria-live="polite" title="Situação dos dados na nuvem">☁ Nuvem conectada</span><button class="mini-action" title="Meu perfil" onclick="openMyProfile()"><svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button></div></header><div id="v"></div><footer class="rayo-labs-footer">RAYO Labs · v0.1.0 Beta</footer></main>
 <nav id="bn" class="bottom" aria-label="Navegação inferior"></nav><div id="m" class="modal" role="dialog" aria-modal="true" aria-hidden="true"><div id="mb" class="modal-panel"></div></div><script>const KEY="mcf_v1"; // Os dados anteriores continuam guardados no navegador como backup.
 const APP_VERSION="rayo-quick-notas-previsoes-20261030";
+const RAYO_LABS_VERSION="v0.2.0 Beta";
 const def=()=>({rec:[],fix:[],var:[],car:[],cmp:[],div:[],res:[],budgets:[],favs:[],reserveHistory:[],settings:{}});
 const normalizeS=data=>{
  const a=Object.assign(def(),data&&typeof data==='object'?data:{});
@@ -473,7 +496,7 @@ const PALETTES={
 };
 const DEFAULT_HOME=['saldo','ganhos','gastos','projecao'];
 const HOME_NAMES={saldo:'Disponível',ganhos:'Ganhos',gastos:'Gastos',projecao:'Projeção'};
-const DEFAULT_SHORTCUTS=['dash'];
+const DEFAULT_SHORTCUTS=['dash','spend','calendar'];
 const PRIMARY_PAGES=['dash','rec','spend','calendar'];
 const APPEARANCE_DEFAULTS={palette:'azul',mode:'light',backgroundStyle:'colored',iconStyle:'minimal',density:'comfortable',privacy:false,homeCards:DEFAULT_HOME,hiddenSections:[],quickTabs:DEFAULT_SHORTCUTS};
 function appearance(){return {...APPEARANCE_DEFAULTS,...(S.settings?.appearance||{})}}
@@ -522,7 +545,8 @@ function updateAppearanceList(field,value,action){
   else {const i=arr.indexOf(value),j=i+(action==='up'?-1:1);if(i<0||j<0||j>=arr.length)return;[arr[i],arr[j]]=[arr[j],arr[i]];}
  }else if(field==='hiddenSections')arr=arr.includes(value)?arr.filter(x=>x!==value):[...arr,value];
  else if(field==='quickTabs'){
-  arr=[value]
+  if(arr.includes(value)){if(arr.length<=1)return;arr=arr.filter(x=>x!==value)}
+  else {if(arr.length>=3)return alert('Você pode escolher até três atalhos. O botão Mais permanece fixo.');arr.push(value)}
  }
  S.settings={...S.settings,appearance:{...a,[field]:arr}};save();go();
 }
@@ -601,17 +625,18 @@ function openPage(p){tab=p;go();window.scrollTo({top:0,behavior:'smooth'})}
 function nav(){
  const a=appearance(),hidden=a.hiddenSections||[],primary=NAV.slice(0,5).filter(n=>!hidden.includes(n[0])),others=NAV.slice(5).filter(n=>!hidden.includes(n[0]));
  $('#sn').innerHTML=`<div class="nav-heading">Principal</div><div class="nav-group">${primary.map(n=>navButton(n)).join('')}</div><div class="nav-heading">Mais opções</div><div class="nav-group">${others.map(n=>navButton(n)).join('')}</div>`;
- const quick=(Array.isArray(a.quickTabs)&&a.quickTabs.length?a.quickTabs:DEFAULT_SHORTCUTS).filter(k=>NAV.some(n=>n[0]===k)).slice(0,1);
- const first=NAV.find(n=>n[0]===(quick[0]||'dash'))||NAV.find(n=>n[0]==='dash');
+ const saved=(Array.isArray(a.quickTabs)&&a.quickTabs.length?a.quickTabs:DEFAULT_SHORTCUTS).filter(k=>NAV.some(n=>n[0]===k));
+ const quick=[...new Set([...saved,...DEFAULT_SHORTCUTS])].slice(0,3);
+ const before=quick.slice(0,2),after=quick.slice(2,3);
  const navItem=n=>`<button class="${n[0]===tab?'on':''} ${n[0]==='more'&&!quick.includes(tab)?'on':''}" aria-label="${E(n[0]==='more'?'Mais':n[2])}" title="${E(n[0]==='more'?'Mais':n[2])}" onclick="${n[0]==='more'?'openMoreMenu()':`openPage('${n[0]}')`}">${I(n[1])}<span>${E(n[2])}</span></button>`;
- $('#bn').innerHTML=`${navItem(first)}<button class="quick" aria-label="Adicionar lançamento" title="Adicionar lançamento" onclick="openAddMenu()">${I('plus')}</button>${navItem(['more','dots','Mais'])}`;
+ $('#bn').innerHTML=`<div class="nav-half nav-left">${before.map(p=>navItem(NAV.find(n=>n[0]===p))).join('')}</div><button class="quick" aria-label="Adicionar lançamento" title="Adicionar lançamento" onclick="openAddMenu()">${I('plus')}</button><div class="nav-half nav-right">${[...after.map(p=>NAV.find(n=>n[0]===p)),['more','dots','Mais']].map(navItem).join('')}</div>`;
 }
 function navButton(n){return `<button class="nav-btn ${tab===n[0]?'on':''}" onclick="openPage('${n[0]}')">${I(n[1])}${E(n[2])}</button>`}
 function openMoreMenu(){
  const list=NAV.filter(n=>n[0]!=='dash');
  open_(`${modalHeader('Mais opções','Todas as áreas do RAYO')}<div class="mobile-more-grid">${list.map(n=>`<button class="more-menu-item ${tab===n[0]?'current':''}" onclick="close_();openPage('${n[0]}')">${I(n[1])}<span>${E(n[2])}</span></button>`).join('')}</div><div class="more-menu-footer"><button class="btn light" onclick="close_();openPage('settings')">${I('palette','sm')} Personalizar</button><button class="btn light" onclick="close_();openPage('sim')">${I('calculator','sm')} Simular</button></div>`);
 }
-function go(){if(!authToken)return;nav();$('#ti').textContent=T[tab]||'RAYO';$('#eyebrow').textContent=tab==='dash'?`Olá, ${authDisplayName}`:monthLabel(ym);$('#ym').value=ym;$('#userBadge').textContent=(authDisplayName||'U').slice(0,1).toUpperCase();$('#v').innerHTML=V[tab]();$('#quickHeader').style.display='inline-flex';}
+function go(){today=localDate(new Date());if(!authToken)return;nav();$('#ti').textContent=T[tab]||'RAYO';$('#eyebrow').textContent=tab==='dash'?`Olá, ${authDisplayName}`:monthLabel(ym);$('#ym').value=ym;$('#userBadge').textContent=(authDisplayName||'U').slice(0,1).toUpperCase();$('#v').innerHTML=V[tab]();$('#quickHeader').style.display='inline-flex';}
 function card(title,body,right=''){return `<section class="card"><div class="subhead"><h2>${title}</h2>${right}</div>${body}</section>`}
 function stat(label,value,ico,cl='',caption=''){return `<div class="card tile ${cl==='main'?'main-tile':''}"><div class="tile-icon">${I(ico)}</div><div class="sub">${E(label)}</div><strong>${R(value)}</strong>${caption?`<div class="tiny-note">${E(caption)}</div>`:''}</div>`}
 function statCount(label,value,ico){return `<div class="card tile"><div class="tile-icon">${I(ico)}</div><div class="sub">${E(label)}</div><strong>${Math.max(0,Number(value)||0)}</strong></div>`}
@@ -672,14 +697,14 @@ function settings(){
  const backgroundModes=`<div class="segmented appearance-segment" role="group" aria-label="Fundo do aplicativo">${[['standard','Padrão · preto/branco'],['colored','Colorido']].map(([v,l])=>`<button class="${opts.backgroundStyle===v?'active':''}" aria-pressed="${opts.backgroundStyle===v}" onclick="setAppearanceOption('backgroundStyle','${v}')">${l}</button>`).join('')}</div>`;
  const densityModes=`<div class="segmented appearance-segment">${[['comfortable','Confortável'],['compact','Compacto']].map(([v,l])=>`<button class="${opts.density===v?'active':''}" onclick="setAppearanceOption('density','${v}')">${l}</button>`).join('')}</div>`;
  const home=[...(opts.homeCards||DEFAULT_HOME),...DEFAULT_HOME.filter(id=>!(opts.homeCards||DEFAULT_HOME).includes(id))].map(id=>`<div class="personalize-row"><label class="personal-check"><input type="checkbox" ${opts.homeCards.includes(id)?'checked':''} onchange="updateAppearanceList('homeCards','${id}','toggle')"> ${HOME_NAMES[id]}</label><div class="row-actions"><button class="mini-action" title="Mover para cima" aria-label="Mover ${HOME_NAMES[id]} para cima" onclick="updateAppearanceList('homeCards','${id}','up')">${I('chevronleft','sm')}</button><button class="mini-action" title="Mover para baixo" aria-label="Mover ${HOME_NAMES[id]} para baixo" onclick="updateAppearanceList('homeCards','${id}','down')">${I('chevronright','sm')}</button></div></div>`).join('');
- const activeShortcut=(Array.isArray(opts.quickTabs)&&opts.quickTabs.length?opts.quickTabs:DEFAULT_SHORTCUTS)[0];
- const quick=PRIMARY_PAGES.concat(['sim','history','budgets','res','car','rel','recurr','div']).map(id=>{const n=NAV.find(x=>x[0]===id);return `<label class="shortcut-chip ${activeShortcut===id?'chosen':''}"><input type="checkbox" ${activeShortcut===id?'checked':''} onchange="updateAppearanceList('quickTabs','${id}','toggle')">${I(n[1],'sm')} ${E(n[2])}</label>`}).join('');
+ const selectedShortcuts=(Array.isArray(opts.quickTabs)&&opts.quickTabs.length?opts.quickTabs:DEFAULT_SHORTCUTS);
+ const quick=PRIMARY_PAGES.concat(['sim','history','budgets','res','car','rel','recurr','div']).map(id=>{const n=NAV.find(x=>x[0]===id);return `<label class="shortcut-chip ${selectedShortcuts.includes(id)?'chosen':''}"><input type="checkbox" ${selectedShortcuts.includes(id)?'checked':''} onchange="updateAppearanceList('quickTabs','${id}','toggle')">${I(n[1],'sm')} ${E(n[2])}</label>`}).join('');
  const hide=NAV.filter(n=>!['dash','settings'].includes(n[0])).map(n=>`<label class="shortcut-chip"><input type="checkbox" ${!opts.hiddenSections.includes(n[0])?'checked':''} onchange="updateAppearanceList('hiddenSections','${n[0]}','toggle')"> ${E(n[2])}</label>`).join('');
  const customList=['rec','fix','var'].flatMap(kind=>(custom[kind]||[]).map((c,idx)=>`<div class="settings-row"><span class="category-mini"><i style="background:${E(c.color||'#315774')}"></i> ${E(c.emoji||'')} ${E(c.name)} <small>${kindNames[kind]}</small></span><button class="mini-action" aria-label="Excluir categoria ${E(c.name)}" onclick="removeCategory('${kind}',${idx})">${I('trash','sm')}</button></div>`)).join('');
  return `<div class="settings-page">
  ${card('Aparência',`<div class="appearance-caption">Cor do RAYO</div><div class="palette-grid">${themeSwatches}</div><div class="appearance-caption">Fundo do aplicativo</div>${backgroundModes}<div class="appearance-caption">Ícones</div>${iconModes}<div class="appearance-caption">Modo</div>${themeModes}<div class="appearance-caption">Espaçamento</div>${densityModes}<div class="appearance-reset"><button class="btn light tiny" onclick="restoreAppearance()">${I('repeat','sm')} Restaurar padrão</button></div>`)}
  ${card('Página inicial',`<p class="quiet">Escolha os cartões e a ordem em que aparecem.</p><div class="home-options">${home}</div>`)}
- ${card('Navegação do celular',`<p class="quiet">Escolha um atalho fixo. A barra terá exatamente 3 botões: atalho, <b>+</b> central e <b>Mais</b>.</p><div class="shortcut-grid">${quick}</div>`)}
+ ${card('Navegação do celular',`<p class="quiet">Escolha até três atalhos. São dois à esquerda do <b>+</b> e um à direita, seguido do botão <b>Mais</b>.</p><div class="shortcut-grid">${quick}</div>`)}
  ${card('Privacidade',`<div class="settings-row"><div><strong>Ocultar valores</strong><br><small>Mostrar valores como •••••.</small></div><button class="btn light tiny" onclick="setAppearanceOption('privacy',null)">${I(opts.privacy?'eyeoff':'eye','sm')} ${opts.privacy?'Mostrar':'Ocultar'}</button></div>`)}
  ${card('Categorias',`${customList||'<p class="quiet">Use suas próprias categorias para novos lançamentos.</p>'}<button class="btn light tiny" onclick="openAddCategory()">${I('plus','sm')} Nova categoria</button>`)}
  ${card('Menu lateral',`<p class="quiet">Marque o que deseja mostrar no computador. Todas as abas seguem disponíveis em “Mais”.</p><div class="shortcut-grid">${hide}</div>`)}
@@ -688,6 +713,7 @@ function settings(){
  ${card('Dados e segurança',`<div class="settings-row"><span>Backup JSON</span><button class="btn light tiny" onclick="backupDados()">${I('download','sm')} Baixar</button></div><div class="settings-row"><span>Exportar CSV</span><button class="btn light tiny" onclick="exportCSV()">${I('download','sm')} Baixar</button></div><div class="settings-row"><span>Limpar registros deste perfil</span><button class="btn d tiny" onclick="resetAllUserData()">${I('trash','sm')} Limpar</button></div>`)}
  ${card('Favoritos',S.favs.length?S.favs.map(f=>`<div class="settings-row"><div><strong>${E(f.name||f.cat)}</strong><br><small>${E(f.cat)} · ${R(f.valor)}</small></div><button class="mini-action" onclick="removeFavorite('${f.id}')">${I('trash','sm')}</button></div>`).join(''):'<p class="muted">Nenhum favorito cadastrado.</p>')}
  ${card('Instalar no celular',`<p class="quiet">iPhone: Safari → Compartilhar → Adicionar à Tela de Início. Android: menu do navegador → Instalar.</p>`)}
+ ${card('Sobre esta versão',`<p class="quiet">RAYO Labs · ${RAYO_LABS_VERSION}. Ambiente experimental, sem alterar o Worker.</p>`)}
  </div>`;
 }
 
@@ -729,7 +755,7 @@ function simulator(){
 }
 
 const V={dash:dashboard,rec:gains,spend:expenses,calendar,history,recurr:recurrence,budgets,res:goals,car:cardsPage,div:debts,rel:reports,sim:simulator,settings};
-function open_(html){$('#mb').innerHTML=html;$('#m').classList.add('open');$('#m').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+function open_(html){today=localDate(new Date());$('#mb').innerHTML=html;initMoneyMasks();$('#m').classList.add('open');$('#m').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
 function close_(){$('#m').classList.remove('open');$('#m').setAttribute('aria-hidden','true');document.body.style.overflow='';}
 function er(t){let n=$('#er');if(!n){n=document.createElement('p');n.id='er';n.className='login-error';$('#mb').append(n)}n.textContent=t}
 const modalHeader=(title,sub='')=>`<div class="modal-top"><div><h2>${E(title)}</h2>${sub?`<p>${E(sub)}</p>`:''}</div><button class="mini-action" aria-label="Fechar janela" onclick="close_()">${I('close')}</button></div>`;
@@ -738,113 +764,319 @@ const FIELD=(label,control,extra='')=>`<div class="field"><label>${label}</label
 function recommendCategory(text,kind){const n=String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();if(kind==='rec')return /salario|pagamento|empresa/.test(n)?'Salário':/extra|freela|servico/.test(n)?'Renda extra':'Outros ganhos';if(/mercado|supermercado|atacadao|assai/.test(n))return 'Mercado';if(/uber|onibus|metro|99|trem/.test(n))return 'Transporte';if(/farmacia|drogaria/.test(n))return 'Farmácia';if(/ifood|entrega|delivery/.test(n))return 'Delivery';if(/comida|restaurante|lanchonete/.test(n))return 'Alimentação';if(/aluguel/.test(n))return 'Aluguel';if(/energia|luz/.test(n))return 'Energia';if(/internet/.test(n))return 'Internet';if(/spotify|netflix|assinatura|prime/.test(n))return 'Assinatura';return ''}
 function guessQuickCategory(){const d=$('#qDesc')?.value||'',k=$('#qKind')?.value||'var',c=recommendCategory(d,k);if(c&&getCats(k)?.includes(c))$('#qCat').value=c}
 
-// RAYO: entrada rápida, nota fiscal por OCR local, confirmação antes de persistir.
+// Adicionar: preserva as opções existentes e leva ao novo scanner fiscal.
 function openAddMenu(){
-  open_(`${modalHeader('Adicionar no RAYO','Escolha como deseja registrar sua movimentação.')}
-   <div class="rayo-add-menu">
-    <button class="rayo-add-option" onclick="openQuick('var')"><span class="rayo-add-ico">${I('trenddown')}</span><span><strong>Adicionar gasto</strong><small>Variável ou fixo, em qualquer data</small></span></button>
-    <button class="rayo-add-option" onclick="openQuick('rec')"><span class="rayo-add-ico">${I('trendup')}</span><span><strong>Adicionar ganho</strong><small>Recebido ou previsto automaticamente</small></span></button>
-    <button class="rayo-add-option" onclick="openReceiptMenu()"><span class="rayo-add-ico">${I('receipt')}</span><span><strong>Escanear nota fiscal</strong><small>Fotografar ou selecionar uma imagem e preencher o gasto variável</small></span></button>
-   </div>`);
-}
-function openReceiptMenu(){
- open_(`${modalHeader('Escanear nota fiscal','O reconhecimento acontece no seu navegador. Revise o valor antes de salvar.')}
+ open_(`${modalHeader('Adicionar no RAYO','Escolha como deseja registrar.')}
  <div class="rayo-add-menu">
-  <button class="rayo-add-option" onclick="$('#receiptCamera').click()"><span class="rayo-add-ico">${I('receipt')}</span><span><strong>Tirar foto</strong><small>Usar a câmera traseira do celular</small></span></button>
-  <button class="rayo-add-option" onclick="$('#receiptImage').click()"><span class="rayo-add-ico">${I('receipt')}</span><span><strong>Escolher imagem</strong><small>Selecionar uma foto salva no dispositivo</small></span></button>
+  <button class="rayo-add-option" onclick="openQuick('var')"><span class="rayo-add-ico">${I('trenddown')}</span><span><strong>Adicionar gasto</strong><small>Fixo ou variável</small></span></button>
+  <button class="rayo-add-option" onclick="openQuick('rec')"><span class="rayo-add-ico">${I('trendup')}</span><span><strong>Adicionar ganho</strong><small>Recebido ou previsto</small></span></button>
+  <button class="rayo-add-option" onclick="openFiscalMenu()"><span class="rayo-add-ico">${I('receipt')}</span><span><strong>Scanner Fiscal</strong><small>Foto, QR Code, consulta SEFAZ ou XML</small></span></button>
+ </div>`);
+}
+// RAYO Labs v0.2.0 Beta | Scanner Fiscal (gratuito)
+// Consulta oficial: abre o portal SEFAZ ao usuário; NÃO promete importação de site com CAPTCHA/CORS.
+// Todas as imagens, QR e XML são processados no navegador; nenhum documento fiscal é salvo.
+const fiscalToday=()=>localDate(new Date());
+let fiscalSession={qr:null,xml:null,ocr:[],issues:[],category:'Outros',source:'foto'};
+const fiscalNumberFormat=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
+function moneyValue(el){
+ if(!el)return NaN;
+ if(el.dataset.money==='true'){const v=String(el.value||'');return (v.trim().startsWith('-')?-1:1)*Number(v.replace(/\D/g,''))/100;}
+ return Number(el.value);
+}
+function centsToDisplay(value){
+ const n=Number(value);
+ return Number.isFinite(n)?fiscalNumberFormat.format(n):'';
+}
+function initMoneyMasks(){
+ document.querySelectorAll('#mb input[type="number"]').forEach(input=>{
+  const label=input.closest('.field')?.querySelector('label')?.textContent||'';
+  if(!/\(R\$\)/.test(label))return;
+  const raw=input.value;const allowNegative=input.id==='baseAmount';
+  input.type='text';input.inputMode='numeric';input.autocomplete='off';input.dataset.money='true';
+  input.value=raw!==''?centsToDisplay(Number(raw)):'';
+  input.addEventListener('input',()=>{
+   const digits=input.value.replace(/\D/g,'').slice(0,12);
+   input.value=digits?(allowNegative&&input.value.trim().startsWith('-')?'-':'')+centsToDisplay(Number(digits)/100):'';
+   try{input.setSelectionRange(input.value.length,input.value.length)}catch{}
+  });
+  input.addEventListener('focus',()=>{if(input.value==='R$ 0,00')input.select()});
+ });
+}
+function openFiscalMenu(){
+ fiscalSession={qr:null,xml:null,ocr:[],issues:[],category:'Outros',source:'foto'};
+ open_(`${modalHeader('Scanner Fiscal','Escolha como adicionar sua nota.')}<div class="rayo-add-menu">
+  <button class="rayo-add-option" onclick="document.getElementById('fiscalCamera').click()"><span class="rayo-add-ico">${I('camera')}</span><span><strong>Fotografar nota ou QR Code</strong><small>Consultar QR Code e comparar com a leitura da foto</small></span></button>
+  <button class="rayo-add-option" onclick="document.getElementById('fiscalPhoto').click()"><span class="rayo-add-ico">${I('receipt')}</span><span><strong>Escolher imagem</strong><small>Uma foto já salva no celular</small></span></button>
+  <button class="rayo-add-option" onclick="document.getElementById('fiscalXml').click()"><span class="rayo-add-ico">${I('file')}</span><span><strong>Importar XML da nota</strong><small>Preencher com o total do documento fiscal</small></span></button>
+  <button class="rayo-add-option" onclick="openFiscalLinkEntry()"><span class="rayo-add-ico">${I('search')}</span><span><strong>Consultar pelo link ou chave</strong><small>Abrir o site oficial da SEFAZ</small></span></button>
  </div>
- <input type="file" id="receiptCamera" accept="image/*" capture="environment" style="display:none" onchange="processReceiptImage(event)">
- <input type="file" id="receiptImage" accept="image/*" style="display:none" onchange="processReceiptImage(event)">
- <p class="rayo-receipt-note">A foto não fica salva no RAYO nem é enviada ao Worker. Para o OCR funcionar é necessária conexão para carregar os arquivos de reconhecimento.</p>
+ <input type="file" id="fiscalCamera" accept="image/*" capture="environment" hidden onchange="processReceiptImage(event)">
+ <input type="file" id="fiscalPhoto" accept="image/*" hidden onchange="processReceiptImage(event)">
+ <input type="file" id="fiscalXml" accept=".xml,text/xml,application/xml" hidden onchange="loadFiscalXML(event)">
  <div class="modal-footer"><button class="btn light" onclick="openAddMenu()">Voltar</button></div>`);
 }
+function openReceiptMenu(){openFiscalMenu()}
+function openFiscalLinkEntry(){
+ open_(`${modalHeader('Consultar NFC-e','Cole o link do QR Code ou a chave de 44 números.')}
+ ${FIELD('Link ou chave de acesso',`<textarea id="fiscalLinkText" rows="3" placeholder="https://... ou 44 dígitos" maxlength="1500"></textarea>`)}
+ <div class="modal-footer"><button class="btn light" onclick="openFiscalMenu()">Voltar</button><button class="btn" onclick="useFiscalLink()">Continuar</button></div>`);
+}
+function fiscalKeyValid(k){
+ if(!/^\d{44}$/.test(k))return false;
+ let sum=0,w=2;for(let i=42;i>=0;i--){sum+=Number(k[i])*w;w=w===9?2:w+1;}
+ const dv=11-sum%11;return Number(k[43])===(dv>=10?0:dv);
+}
+function parseFiscalLink(text){
+ const raw=String(text||'').trim();
+ if(/^\d{44}$/.test(raw))return {url:'',key:fiscalKeyValid(raw)?raw:null,error:fiscalKeyValid(raw)?'':'Chave fiscal inválida (dígito verificador).'};
+ let u;
+ try{u=new URL(raw)}catch{return {url:'',key:null,error:'Informe um link válido da SEFAZ ou uma chave de 44 dígitos.'};}
+ const host=u.hostname.toLowerCase();
+ // Não abrir links arbitrários de QR Code como se fossem portais governamentais.
+ const official=host.endsWith('.gov.br')&&/(?:^|\.)(?:sefaz|fazenda|nfce|dfe|svrs|receita)(?:\.|-)/.test(host);
+ if(!official||!['https:','http:'].includes(u.protocol)||u.username||u.password||u.port){
+  return {url:'',key:null,error:'O QR Code não aponta para um domínio fiscal governamental reconhecido.'};
+ }
+ if(u.protocol==='http:')u.protocol='https:';
+ let key=u.searchParams.get('chNFe')||u.searchParams.get('chave')||u.searchParams.get('chaveAcesso')||'';
+ const p=u.searchParams.get('p')||'';
+ if(!key&&/^\d{44}(?:\||$)/.test(p))key=p.slice(0,44);
+ const vnf=u.searchParams.get('vNF');
+ let amount=null;
+ if(vnf&&/^\d{1,8}(?:[.,]\d{2})$/.test(vnf))amount=Number(vnf.replace(',','.'));
+ return {url:u.href,key:fiscalKeyValid(key)?key:null,qrAmount:amount,error:''};
+}
+function useFiscalLink(){
+ const link=parseFiscalLink(document.getElementById('fiscalLinkText')?.value);
+ if(link.error)return er(link.error);
+ fiscalSession={qr:link,xml:null,ocr:[],issues:[],category:'Outros',source:'link'};
+ showFiscalReview({amount:link.qrAmount||'',cat:'Outros'},link.qrAmount?'Total sugerido pelo QR Code; confirme no portal antes de salvar.':'Consulte o valor no portal oficial e preencha o total.');
+}
+function openOfficialFiscal(){
+ const url=fiscalSession.qr?.url;
+ if(url){window.open(url,'_blank','noopener,noreferrer');return;}
+ // Sem link direto não é possível montar com segurança uma URL universal para todas as UFs.
+ if(fiscalSession.qr?.key?.startsWith('35'))window.open('https://www.nfce.fazenda.sp.gov.br/NFCeConsultaPublica','_blank','noopener,noreferrer');
+ else alert('Para esta chave, abra o site de consulta NFC-e do estado emissor. O RAYO não possui um endereço universal para todas as UFs.');
+}
+async function loadQRLib(){
+ if(typeof window.jsQR==='function')return true;
+ if(window.__rayoQRPromise)return window.__rayoQRPromise;
+ window.__rayoQRPromise=new Promise(resolve=>{
+  const s=document.createElement('script');s.async=true;
+  s.src='https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js';
+  s.onload=()=>resolve(typeof window.jsQR==='function');s.onerror=()=>resolve(false);
+  document.head.appendChild(s);
+ });return window.__rayoQRPromise;
+}
+async function imageForReceipt(file){
+ const url=URL.createObjectURL(file);
+ try{return await new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(new Error('Não foi possível abrir a imagem.'));im.src=url;});}
+ finally{URL.revokeObjectURL(url);}
+}
+function fiscalPhotoCanvas(img,maxSide=1700,top=0,bottom=1){
+ const h=img.naturalHeight,w=img.naturalWidth;
+ const y=Math.floor(h*top),sliceHeight=Math.max(1,Math.floor(h*(bottom-top)));
+ const ratio=Math.min(2,maxSide/Math.max(w,sliceHeight)),c=document.createElement('canvas');
+ c.width=Math.max(1,Math.floor(w*ratio));c.height=Math.max(1,Math.floor(sliceHeight*ratio));
+ const context=c.getContext('2d',{willReadFrequently:true});
+ context.fillStyle='#fff';context.fillRect(0,0,c.width,c.height);
+ context.drawImage(img,0,y,w,sliceHeight,0,0,c.width,c.height);return c;
+}
+async function decodeFiscalQR(file){
+ let im;try{im=await imageForReceipt(file)}catch{return null;}
+ const canvases=[fiscalPhotoCanvas(im,1900),fiscalPhotoCanvas(im,1400,.35,1),fiscalPhotoCanvas(im,1400,.55,1)];
+ if('BarcodeDetector' in window){
+  try{const det=new BarcodeDetector({formats:['qr_code']});
+   for(const c of canvases){const items=await det.detect(c);for(const item of items){const q=parseFiscalLink(item.rawValue||'');if(!q.error)return q;}}
+  }catch{}
+ }
+ if(!await loadQRLib())return null;
+ for(const c of canvases){
+  const ctx=c.getContext('2d',{willReadFrequently:true});const data=ctx.getImageData(0,0,c.width,c.height);
+  for(const inversionAttempts of ['dontInvert','attemptBoth']){
+   let code=null;try{code=window.jsQR(data.data,c.width,c.height,{inversionAttempts})}catch{}
+   if(code){const q=parseFiscalLink(code.data||'');if(!q.error)return q;}
+  }
+ }
+ return null;
+}
+function xmlTag(parent,tag){return Array.from(parent?.getElementsByTagName('*')||[]).find(e=>e.localName===tag)||null;}
+function xmlChild(parent,tag){return Array.from(parent?.children||[]).find(e=>e.localName===tag)||null;}
+function parseFiscalXML(xmlText){
+ if(/<!DOCTYPE|<!ENTITY/i.test(xmlText))throw Error('XML com conteúdo não permitido.');
+ const doc=new DOMParser().parseFromString(xmlText,'application/xml');
+ if(doc.getElementsByTagName('parsererror').length)throw Error('Arquivo XML inválido.');
+ const inf=xmlTag(doc,'infNFe');if(!inf)throw Error('O XML não contém uma NF-e/NFC-e.');
+ const ide=xmlChild(inf,'ide'),model=xmlChild(ide,'mod')?.textContent?.trim();
+ if(!['55','65'].includes(model))throw Error('O documento não é uma NF-e ou NFC-e válida para este leitor.');
+ const id=inf.getAttribute('Id')||'',key=id.replace(/^NFe/,'');
+ if(!fiscalKeyValid(key))throw Error('O XML não apresenta chave de acesso válida.');
+ const tot=xmlChild(inf,'total'),icms=xmlChild(tot,'ICMSTot'),raw=xmlChild(icms,'vNF')?.textContent?.trim();
+ if(!/^\d+(?:\.\d{1,2})?$/.test(raw||''))throw Error('Não foi encontrado o total vNF no XML.');
+ const amount=Number(raw);
+ if(!(amount>0&&amount<10000000))throw Error('Valor total inválido no XML.');
+ const emit=xmlChild(inf,'emit'),name=xmlChild(emit,'xNome')?.textContent||'';
+ let products='';
+ for(const det of Array.from(inf.children).filter(c=>c.localName==='det').slice(0,8))products+=' '+(xmlChild(xmlChild(det,'prod'),'xProd')?.textContent||'');
+ return {amount,key,cat:receiptCategory(name+' '+products),model,source:'xml'};
+}
+async function loadFiscalXML(event){
+ const file=event.target.files?.[0];event.target.value='';if(!file)return;
+ if(file.size>2*1024*1024)return er('O XML deve ter no máximo 2 MB.');
+ try{
+  const parsed=parseFiscalXML(await file.text());
+  fiscalSession={qr:null,xml:parsed,ocr:[],issues:[],category:parsed.cat,source:'xml'};
+  showFiscalReview({amount:parsed.amount,cat:parsed.cat},'Valor extraído do XML fornecido. A autenticidade fiscal não foi verificada.');
+ }catch(e){er(e.message||'Não foi possível interpretar o XML.');}
+}
+// OCR local sem custo: leituras independentes da imagem e da região do total.
 let rayoOcrLoading=null;
 function loadReceiptOCR(){
  if(window.Tesseract?.createWorker)return Promise.resolve();
  if(rayoOcrLoading)return rayoOcrLoading;
  rayoOcrLoading=new Promise((resolve,reject)=>{
   const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';sc.async=true;
-  sc.onload=()=>window.Tesseract?.createWorker?resolve():reject(new Error('Módulo de leitura indisponível'));
-  sc.onerror=()=>reject(new Error('Não foi possível carregar a leitura de notas. Verifique a internet.'));
+  sc.onload=()=>window.Tesseract?.createWorker?resolve():reject(new Error('Biblioteca OCR indisponível.'));
+  sc.onerror=()=>reject(new Error('Sem conexão para carregar a biblioteca OCR.'));
   document.head.appendChild(sc);
  }).catch(e=>{rayoOcrLoading=null;throw e});return rayoOcrLoading;
 }
-const parseReceiptMoney=s=>{
- const m=String(s||'').replace(/\s/g,'').match(/(?:R\$)?(\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2})/i);
- if(!m)return null;
- const n=Number(m[1].replace(/\./g,'').replace(',','.'));return Number.isFinite(n)&&n>0&&n<10000000?Math.round(n*100)/100:null;
-};
-function parseReceipt(text){
- const lines=String(text||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
- const normalizeLine=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/\bT[O0]TA[L1I]\b/g,'TOTAL');
- const excluded=/CNPJ|CPF|TROCO|DESCONTO|SUB\s*TOTAL|TOTAL\s+DE\s+ITENS|TOTAL\s+DOS\s+ITENS|TRIBUT|QTD|QUANTIDADE|UNITARIO|V\.\s*UNIT|CODIGO|ITEM\s+TOTAL|VL\.?\s*TOTAL/;
- const amounts=line=>[...String(line||'').matchAll(/(?:R\$\s*)?(\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2})/gi)].map(m=>parseReceiptMoney(m[0])).filter(n=>n!==null);
- let best={amount:null,score:-1,line:''};
+const receiptCanonical=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/\bT[O0]T[A4][1IL]\b/g,'TOTAL');
+function receiptCategory(text){
+ const s=receiptCanonical(text),get=c=>getCats('var').includes(c)?c:'Outros';
+ if(/SUPERM|SUPERSER|MERCAD|ATACAD|ATACAREJO|MERCEARIA|HIPERMERC|CARREFOUR|ASSAI|SOL\s+PRAZA|PAO\s+FRANCES/.test(s))return get('Mercado');
+ if(/FARMACIA|DROGARIA|DROGASIL|DROGA\s*RAIA/.test(s))return get('Farmácia');
+ if(/COMBUST|GASOLINA|ETANOL|DIESEL/.test(s))return get('Combustível');
+ if(/RESTAURANTE|PADARIA|LANCHONETE|PIZZARIA|CAFETERIA/.test(s))return get('Alimentação');
+ if(/METRO|UBER|PASSAGEM|TRANSPORTE|ONIBUS/.test(s))return get('Transporte');
+ return get(recommendCategory(s,'var')||'Outros');
+}
+function receiptMoneyValues(line){
+ const s=String(line||'');const out=[];
+ for(const m of s.matchAll(/(?:R\$\s*)?(\d{1,3}(?:\.\d{3})+|\d{1,7})\s*[,\.]\s*([\dOoIl|]{2})(?!\d)/g)){
+  const re=m[1].replace(/\./g,'');const cents=m[2].replace(/[Oo]/g,'0').replace(/[Il|]/g,'1');
+  const n=(Number(re)*100+Number(cents))/100;
+  if(Number.isFinite(n)&&n>0&&n<1e7)out.push(n);
+ }
+ return out;
+}
+function receiptEvidence(text,source){
+ const lines=String(text||'').split(/\r?\n/).map(s=>s.trim()).filter(Boolean);const found=[];
  for(let i=0;i<lines.length;i++){
-  const line=lines[i],next=lines[i+1]||'',norm=normalizeLine(line),normNext=normalizeLine(next);
-  if(excluded.test(norm))continue;
-  const values=amounts(line),nextValues=amounts(next);
-  let score=0,amount=null,source='';
-  if(/(^|\s)TOTAL(?:\s|:|R\$|$)/.test(norm)&&values.length){score=/^TOTAL(?:\s|:|R\$|$)/.test(norm)?100:96;amount=values[values.length-1];source=line;}
-  else if(/^TOTAL\b/.test(norm)&&!values.length&&nextValues.length&&!excluded.test(normNext)){score=94;amount=nextValues[nextValues.length-1];source=line+' '+next;}
-  else if(/VALOR\s+TOTAL|TOTAL\s+GERAL|VALOR\s+(A\s*PAGAR|PAGO)|LIQUIDO\s+A\s+PAGAR/.test(norm)&&values.length){score=90;amount=values[values.length-1];source=line;}
-  else if(/VALOR\s+(DO\s+)?(?:DEBITO|CREDITO)|VALOR\s*:/.test(norm)&&values.length){score=50;amount=values[values.length-1];source=line;}
-  else if(/PAGAMENTO\s+TOTAL|TOTAL\s+PAGO/.test(norm)&&values.length){score=70;amount=values[values.length-1];source=line;}
-  if(amount!==null&&score>best.score){best={amount,score,line:source};}
+  const line=lines[i],n=receiptCanonical(line);
+  if(/CNPJ|CPF|SUB\s*TOTAL|TOTAL\s+(?:DE|DOS)\s+ITENS|TRIBUT|CODIGO|TROCO|DESCONTO|VL\.?\s*UNIT|UNITARIO|QTD|QUANTIDADE/.test(n))continue;
+  let kind='';
+  if(/(?:^|\s)(?:TOTAL|T0TAL)(?:\s|:|R\$|$)/.test(n)||/VALOR\s+TOTAL|TOTAL\s+A\s+PAGAR/.test(n))kind='total';
+  else if(/VALOR\s+(?:PAGO|DO\s+DEBITO|DEBITO)|(?:^|\s)PAGAMENTO\s+(?:TOTAL|R\$)/.test(n))kind='pagamento';
+  if(!kind)continue;
+  let amounts=receiptMoneyValues(line);
+  if(!amounts.length&&i+1<lines.length&&!/CNPJ|CPF|TOTAL\s+DE\s+ITENS|TRIBUT/.test(receiptCanonical(lines[i+1])))amounts=receiptMoneyValues(lines[i+1]);
+  for(const amount of amounts.slice(-2))found.push({amount,kind,source});
  }
- let date=today;
- for(const line of lines){
-  const d=line.match(/(?:^|\D)(\d{2})[/\.\-](\d{2})[/\.\-](\d{4})(?:\D|$)/);
-  if(!d)continue;
-  const candidate=`${d[3]}-${d[2]}-${d[1]}`;
-  if(validDate(candidate)&&candidate<='2100-12-31'&&candidate>='2000-01-01'){date=candidate;break}
+ return found;
+}
+function decideReceiptAmount(evidence,qrAmount=null){
+ const groups=new Map();
+ const add=(v,kind,source)=>{
+  const key=Math.round(Number(v)*100);
+  if(!(key>0&&key<1e9))return;
+  const rec=groups.get(key)||{amount:key/100,weight:0,sources:new Set(),labels:new Set()};
+  const unique=kind+':'+source;
+  if(!rec.sources.has(unique)){rec.weight+=(kind==='total'?3:kind==='pagamento'?2:1);rec.sources.add(unique);rec.labels.add(kind);}
+  groups.set(key,rec);
+ };
+ for(const x of evidence||[])add(x.amount,x.kind,x.source);
+ if(qrAmount!=null)add(qrAmount,'qr','parametro-qr');
+ const ranking=[...groups.values()].sort((a,b)=>b.weight-a.weight||b.sources.size-a.sources.size);
+ if(!ranking.length)return {amount:'',conflict:false,options:[]};
+ const best=ranking[0],second=ranking[1];
+ if(second){
+  // Discordâncias de centavos são tratadas como dúvidas: nunca escolher o maior/mais frequente cegamente.
+  // Somente um candidato com duas modalidades diferentes (p.ex. total+pagamento) e vantagem robusta pode vencer.
+  const corroborated=best.labels.has('total')&&(best.labels.has('pagamento')||best.labels.has('qr'));
+  if(!corroborated||best.weight<second.weight*2)return {amount:'',conflict:true,options:ranking.map(g=>g.amount)};
  }
- const merchant=lines.slice(0,9).find(line=>line.length>3&&line.length<75&&!/CNPJ|CPF|DANFE|DOCUMENTO|AUXILIAR|NOTA FISCAL|CUPOM|ENDERECO|RUA\s|AVENIDA|EXTRATO|TELEFONE|www\.|https?:|\d{2}[/\.\-]\d{2}[/\.\-]\d{4}/i.test(line))||'Compra com nota fiscal';
- const description=merchant.replace(/[<>"'`]/g,'').slice(0,120);
- const catGuess=recommendCategory(description+' '+text.slice(0,500),'var');
- return {amount:best.amount??'',date,desc:description,cat:getCats('var').includes(catGuess)?catGuess:'Outros',raw:text,totalLine:best.line||''};
+ return {amount:best.amount,conflict:false,options:ranking.map(g=>g.amount)};
+}
+function enhancedReceiptCanvas(canvas){
+ const c=document.createElement('canvas');c.width=canvas.width;c.height=canvas.height;
+ const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(canvas,0,0);
+ const d=ctx.getImageData(0,0,c.width,c.height),a=d.data;
+ for(let i=0;i<a.length;i+=4){const r=a[i],g=a[i+1],b=a[i+2];
+  const redMarker=r>155&&r>g*1.48&&r>b*1.48;
+  let y=redMarker?247:.299*r+.587*g+.114*b;
+  y=Math.max(0,Math.min(255,(y-124)*1.5+144));a[i]=a[i+1]=a[i+2]=y;
+ }ctx.putImageData(d,0,0);return c;
+}
+function receiptCanvasRegion(c,start,portion){
+ const y=Math.floor(c.height*start),h=Math.max(1,Math.min(c.height-y,Math.floor(c.height*portion)));
+ const out=document.createElement('canvas');out.width=c.width;out.height=h;
+ out.getContext('2d').drawImage(c,0,y,c.width,h,0,0,out.width,h);return out;
 }
 async function processReceiptImage(event){
  const file=event.target.files?.[0];event.target.value='';if(!file)return;
- if(!file.type.startsWith('image/'))return er('Selecione uma imagem da nota fiscal.');
- if(file.size>18*1024*1024)return er('A foto deve ter até 18 MB.');
- open_(`${modalHeader('Lendo nota fiscal','O RAYO está procurando o total da compra, data e estabelecimento.')}
- <div class="rayo-receipt-progress"><div class="spinner" aria-hidden="true"></div><strong id="receiptProgress">Preparando a leitura…</strong><small class="rayo-receipt-note">Fotos nítidas, retas e bem iluminadas geram resultados melhores.</small></div>`);
- let worker=null;
+ if(!file.type.startsWith('image/'))return er('Selecione uma imagem.');
+ if(file.size>18*1024*1024)return er('A imagem deve ter no máximo 18 MB.');
+ fiscalSession={qr:null,xml:null,ocr:[],issues:[],category:'Outros',source:'foto'};
+ open_(`${modalHeader('Analisando nota')}<div class="rayo-receipt-progress"><div class="spinner" aria-hidden="true"></div><strong id="receiptProgress">Buscando QR Code fiscal…</strong></div>`);
+ const progress=t=>{const el=document.getElementById('receiptProgress');if(el)el.textContent=t;};
+ let worker=null,texts=[];
  try{
+  const qr=await decodeFiscalQR(file).catch(()=>null);fiscalSession.qr=qr;
+  progress(qr?'QR Code identificado. Conferindo o valor…':'Procurando o TOTAL na nota…');
   await loadReceiptOCR();
-  const status=$('#receiptProgress');if(status)status.textContent='Reconhecendo o texto da nota…';
-  worker=await Tesseract.createWorker('por',1,{logger:m=>{if(m.status==='recognizing text'&&$('#receiptProgress'))$('#receiptProgress').textContent=`Lendo a nota… ${Math.round((m.progress||0)*100)}%`;}});
-  const result=await worker.recognize(file);
-  const data=parseReceipt(result.data?.text||'');
-  showReceiptReview(data,data.amount?'':'Não foi possível identificar o total com segurança. Digite o valor antes de salvar.');
+  const im=await imageForReceipt(file);const original=fiscalPhotoCanvas(im,2200),enhanced=enhancedReceiptCanvas(original);
+  worker=await Tesseract.createWorker('por',1);
+  for(const [source,canvas] of [['imagem',original],['melhoria',enhanced],['centro',receiptCanvasRegion(enhanced,.18,.50)]]){
+   progress(source==='imagem'?'Lendo a nota…':source==='melhoria'?'Conferindo o TOTAL…':'Comparando os valores…');
+   const out=await worker.recognize(canvas);
+   texts.push(out.data?.text||'');
+   fiscalSession.ocr.push(...receiptEvidence(out.data?.text||'',source));
+  }
+  fiscalSession.category=receiptCategory(texts.join('\n'));
+  const decision=decideReceiptAmount(fiscalSession.ocr,qr?.qrAmount);
+  fiscalSession.issues=decision.options;
+  showFiscalReview({amount:decision.amount,cat:fiscalSession.category},decision.conflict?'Foram encontrados valores diferentes. Escolha o correto após conferir a nota.':decision.amount===''?'Não foi possível confirmar o total. Informe o valor antes de salvar.':(!fiscalSession.ocr.length&&qr?.qrAmount!=null?'Valor obtido do parâmetro do QR Code, ainda não confirmado pela SEFAZ.':''));
  }catch(e){
-  showReceiptReview({amount:'',date:today,desc:'Compra com nota fiscal',cat:'Outros',raw:''},`Leitura automática indisponível: ${e.message}. Você pode preencher o gasto manualmente.`);
+  const decision=decideReceiptAmount(fiscalSession.ocr,fiscalSession.qr?.qrAmount);
+  showFiscalReview({amount:decision.amount,cat:fiscalSession.category},'Leitura incompleta. Confira a nota e preencha o valor antes de salvar.');
  }finally{if(worker)try{await worker.terminate()}catch{}}
 }
-function showReceiptReview(data,warning=''){
- const categories=getCats('var'),date=validDate(data.date)?data.date:today;
- open_(`${modalHeader('Conferir gasto da nota','Identificamos os dados para um lançamento variável. Confira antes de incluir.')}
+function chooseFiscalCandidate(cents){
+ const el=document.getElementById('receiptAmount');if(!el)return;
+ el.value=centsToDisplay(Number(cents)/100);
+ document.getElementById('fiscalCandidateHelp')?.remove();
+}
+function showFiscalReview(data,warning=''){
+ const cats=getCats('var'),date=fiscalToday(),val=Number(data.amount),has=Number.isFinite(val)&&val>0;
+ const qr=fiscalSession.qr,xml=fiscalSession.xml;
+ const methods=xml?'XML importado':qr?.url?'QR fiscal localizado':'OCR da foto';
+ open_(`${modalHeader('Conferir gasto da nota','Confira o valor antes de salvar.')}
  ${warning?`<p class="rayo-status-hint">${E(warning)}</p>`:''}
  <div class="field-grid">
-  <div class="field full">${FIELD('Total pago (R$)',`<input id="receiptAmount" type="number" step="0.01" inputmode="decimal" min="0.01" max="9999999" value="${E(data.amount)}" required>` )}</div>
-  ${FIELD('Data da compra',`<input id="receiptDate" type="date" value="${E(date)}" required>`)}
-  ${FIELD('Categoria variável',`<select id="receiptCat">${selectOpts(categories,data.cat||'Outros')}</select>`)}
-  <div class="field full">${FIELD('Estabelecimento / descrição',`<input id="receiptDesc" maxlength="120" value="${E(data.desc||'Compra com nota fiscal')}" required>` )}</div>
+  <div class="field full">${FIELD('Total pago (R$)',`<input id="receiptAmount" type="number" inputmode="decimal" step="0.01" min="0.01" value="${has?val:''}" placeholder="R$ 0,00" required>`)}</div>
+  ${FIELD('Data do lançamento',`<input id="receiptDate" type="date" value="${E(date)}" required>`)}
+  ${FIELD('Categoria variável',`<select id="receiptCat">${selectOpts(cats,data.cat||'Outros')}</select>`)}
+  <div class="field full">${FIELD('Descrição <span class="optional">(opcional)</span>',`<input id="receiptDesc" maxlength="120" placeholder="Sem descrição" value="">`)}</div>
  </div>
- <p class="rayo-status-hint">A nota gera um único lançamento pelo valor total da compra, sem repetir cada produto. Datas futuras entram como previstas automaticamente.</p>
- ${data.totalLine?`<p class="rayo-receipt-note">Linha identificada como total: <b>${E(data.totalLine.slice(0,120))}</b></p>`:''}
- ${data.raw?`<details><summary class="rayo-receipt-note">Ver texto reconhecido</summary><pre class="rayo-receipt-raw">${E(data.raw.slice(0,3000))}</pre></details>`:''}
- <div class="modal-footer"><button class="btn light" onclick="openReceiptMenu()">Outra foto</button><button class="btn" onclick="saveReceiptExpense()">${I('check','sm')} Salvar gasto variável</button></div>`);
+ ${fiscalSession.issues.length>1&&!has?`<div id="fiscalCandidateHelp" class="fiscal-candidates"><small>Possíveis totais encontrados:</small><div class="row-actions">${fiscalSession.issues.slice(0,4).map(v=>`<button class="btn light tiny" onclick="chooseFiscalCandidate(${Math.round(v*100)})">${E(centsToDisplay(v))}</button>`).join('')}</div></div>`:''}
+ ${qr?.url?`<div class="fiscal-reference"><span>${I('shield','sm')} QR Code fiscal encontrado</span><button type="button" class="btn light tiny" onclick="openOfficialFiscal()">Abrir consulta SEFAZ</button></div>`:''}
+ ${qr?.key&&!qr.url?`<p class="fiscal-disclaimer">Chave fiscal: ${E(qr.key.slice(0,10))}… Consulte no portal da SEFAZ.</p><button class="btn light tiny" onclick="openOfficialFiscal()">Abrir portal</button>`:''}
+ ${xml?`<p class="fiscal-disclaimer">Valor do XML local. Arquivo não autenticado pela SEFAZ.</p>`:''}
+ <div class="modal-footer"><button class="btn light" onclick="openFiscalMenu()">Outra nota</button><button class="btn" onclick="saveReceiptExpense()">${I('check','sm')} Salvar gasto variável</button></div>`);
 }
 function saveReceiptExpense(){
- const amount=Number($('#receiptAmount')?.value),date=$('#receiptDate')?.value,desc=($('#receiptDesc')?.value||'').trim().slice(0,120),cat=$('#receiptCat')?.value;
- if(!Number.isFinite(amount)||amount<=0||amount>1e7)return er('Confira o total da nota fiscal.');
- if(!validDate(date)||!desc||!getCats('var').includes(cat))return er('Confira a data, categoria e descrição da nota.');
- const value=Math.round(amount*100)/100;
- const possible=S.var.find(x=>x.data===date&&Math.abs(Number(x.valor||0)-value)<0.005&&(x.desc||'').trim().toLowerCase()===desc.toLowerCase());
- if(possible&&!confirm('Já existe um gasto com esta data, valor e descrição. Deseja cadastrar mesmo assim?'))return;
- S.var.push({id:uid(),desc,valor:value,data:date,cat,freq:'unica',method:'',pm:{},managed:true,statusMode:'auto',origin:'receipt',paused:false,pausedRanges:[],skip:{},endDate:''});
+ const amount=moneyValue(document.getElementById('receiptAmount')),
+  date=document.getElementById('receiptDate')?.value,cat=document.getElementById('receiptCat')?.value,
+  desc=(document.getElementById('receiptDesc')?.value||'').trim().slice(0,120);
+ if(!Number.isFinite(amount)||amount<=0||amount>1e7)return er('Confira o valor total da nota.');
+ if(!validDate(date)||!getCats('var').includes(cat))return er('Confira a data e a categoria.');
+ const val=Math.round(amount*100)/100,key=fiscalSession.xml?.key||fiscalSession.qr?.key||'';
+ const duplicate=S.var.find(x=>key&&x.fiscalKey===key||x.data===date&&Math.abs(Number(x.valor||0)-val)<.005&&x.cat===cat);
+ if(duplicate&&!confirm('Já existe um gasto semelhante'+(key?' com a mesma chave fiscal':'')+'. Deseja cadastrar novamente?'))return;
+ S.var.push({id:uid(),desc,valor:val,data:date,cat,freq:'unica',method:'',pm:{},managed:true,statusMode:'auto',origin:'receipt',fiscalKey:key,fiscalSource:fiscalSession.xml?'xml':fiscalSession.qr?.url?'qr-ocr':'ocr',paused:false,pausedRanges:[],skip:{},endDate:''});
  ym=date.slice(0,7);calendarSelected=date;save();close_();tab='spend';go();
 }
 
@@ -884,7 +1116,7 @@ function updateQuickStatusHint(){
 }
 function quickChangeKind(k){const desc=$('#qDesc')?.value||'',date=$('#qDate')?.value||today,amount=$('#qValor')?.value||'',freq=$('#qFreq')?.value||'unica',paid=$('#qPaid')?.value||'auto';openQuick(k,date);if(desc)$('#qDesc').value=desc;if(amount)$('#qValor').value=amount;$('#qFreq').value=freq;$('#qPaid').value=paid;$('#qExtra').classList.remove('hidden')}
 function saveQuick(originKind,editId=''){
- const value=Number($('#qValor')?.value),date=$('#qDate')?.value,kind=$('#qKind')?.value||originKind,cat=$('#qCat')?.value,desc=($('#qDesc')?.value||'').trim(),freq=$('#qFreq')?.value||'unica',endDate=$('#qEnd')?.value||'',paid=$('#qPaid')?.value==='1',method=$('#qMethod')?.value||'';
+ const value=moneyValue($('#qValor')),date=$('#qDate')?.value,kind=$('#qKind')?.value||originKind,cat=$('#qCat')?.value,desc=($('#qDesc')?.value||'').trim(),freq=$('#qFreq')?.value||'unica',endDate=$('#qEnd')?.value||'',paid=$('#qPaid')?.value==='1',method=$('#qMethod')?.value||'';
  if(!['rec','fix','var'].includes(kind)||!getCats(kind).includes(cat))return er('Confira a categoria escolhida.');
  if(!Number.isFinite(value)||value<=0||value>1e10)return er('Informe um valor maior que zero.');
  if(!validDate(date))return er('Informe uma data válida.');
@@ -912,19 +1144,19 @@ function deleteOccurrence(kind,id,date){const x=S[kind]?.find(v=>v.id===id);if(!
 function deleteForever(kind,id){S[kind]=S[kind].filter(x=>x.id!==id);if(kind==='car')S.cmp=S.cmp.filter(x=>x.cid!==id);save();close_();go()}
 function pauseRecurrence(kind,id){const x=S[kind]?.find(v=>v.id===id);if(!x)return;if(!x.paused){x.paused=true;x.pausedFrom=today;}else{x.paused=false;x.pausedRanges=x.pausedRanges||[];x.pausedRanges.push({from:x.pausedFrom||today,to:today});delete x.pausedFrom;}save();go()}
 function openBudget(cat=''){const b=S.budgets.find(x=>x.cat===cat);const cats=[...new Set([...getCats('var'),...getCats('fix'),'Cartões','Dívidas'])];open_(`${modalHeader(b?'Editar orçamento':'Novo orçamento','Defina quanto pretende gastar por mês.')}<div class="field-grid">${FIELD('Categoria',`<select id="budgetCat" ${b?'disabled':''}>${selectOpts(cats,b?.cat||'Mercado')}</select>`)}${FIELD('Limite mensal (R$)',`<input id="budgetValue" type="number" step="0.01" min="0.01" value="${b?.valor||''}" placeholder="Ex.: 600,00">`)}</div><div class="modal-footer"><button class="btn light" onclick="close_()">Cancelar</button><button class="btn" onclick="saveBudget('${E(cat)}')">Salvar</button></div>`)}
-function saveBudget(previous=''){const cat=$('#budgetCat').value,value=Number($('#budgetValue').value);if(!Number.isFinite(value)||value<=0)return er('Informe um limite maior que zero.');const found=S.budgets.find(x=>x.cat===cat);if(found&&previous!==cat)return er('Já existe um orçamento para esta categoria.');if(found)found.valor=value;else S.budgets.push({cat,valor:value});save();close_();go()}
+function saveBudget(previous=''){const cat=$('#budgetCat').value,value=moneyValue($('#budgetValue'));if(!Number.isFinite(value)||value<=0)return er('Informe um limite maior que zero.');const found=S.budgets.find(x=>x.cat===cat);if(found&&previous!==cat)return er('Já existe um orçamento para esta categoria.');if(found)found.valor=value;else S.budgets.push({cat,valor:value});save();close_();go()}
 function removeFavorite(id){S.favs=S.favs.filter(x=>x.id!==id);save();go()}
 function deleteBudget(cat){if(!confirm('Excluir o limite da categoria '+cat+'?'))return;S.budgets=S.budgets.filter(x=>x.cat!==cat);save();go()}
 function openGoal(id=''){const x=S.res.find(v=>v.id===id);open_(`${modalHeader(x?'Editar meta':'Nova meta','Um objetivo por vez, sem complicação.')}<div class="field-grid">${FIELD('Nome da meta',`<input id="goalName" maxlength="90" value="${E(x?.nome||'')}" placeholder="Ex.: Reserva de emergência">`)}${FIELD('Objetivo (R$)',`<input id="goalTarget" type="number" min="0.01" step="0.01" value="${x?.meta??''}" placeholder="5000,00">`)}${FIELD('Já reservado (R$)',`<input id="goalSaved" type="number" min="0" step="0.01" value="${x?.atual??0}">`)}${FIELD('Meta por mês (R$)',`<input id="goalMonthly" type="number" min="0" step="0.01" value="${x?.contrib??0}">`)}<div class="field full">${FIELD('Observação <span class="optional">(opcional)</span>',`<input id="goalNote" maxlength="120" value="${E(x?.obj||'')}" placeholder="Para quê você está guardando">`)}</div></div><div class="modal-footer"><button class="btn light" onclick="close_()">Cancelar</button><button class="btn" onclick="saveGoal('${E(id)}')">Salvar meta</button></div>`)}
-function saveGoal(id=''){const nome=$('#goalName').value.trim(),meta=Number($('#goalTarget').value),atual=Number($('#goalSaved').value),contrib=Number($('#goalMonthly').value),obj=$('#goalNote').value.trim();if(!nome||!Number.isFinite(meta)||meta<=0||!Number.isFinite(atual)||atual<0||!Number.isFinite(contrib)||contrib<0)return er('Confira o nome e os valores.');const x=S.res.find(v=>v.id===id);if(x)Object.assign(x,{nome,meta,atual,contrib,obj});else S.res.push({id:uid(),nome,meta,atual,contrib,obj});save();close_();go()}
+function saveGoal(id=''){const nome=$('#goalName').value.trim(),meta=moneyValue($('#goalTarget')),atual=moneyValue($('#goalSaved')),contrib=moneyValue($('#goalMonthly')),obj=$('#goalNote').value.trim();if(!nome||!Number.isFinite(meta)||meta<=0||!Number.isFinite(atual)||atual<0||!Number.isFinite(contrib)||contrib<0)return er('Confira o nome e os valores.');const x=S.res.find(v=>v.id===id);if(x)Object.assign(x,{nome,meta,atual,contrib,obj});else S.res.push({id:uid(),nome,meta,atual,contrib,obj});save();close_();go()}
 function openGoalMove(id,sign){const x=S.res.find(v=>v.id===id);if(!x)return;open_(`${modalHeader(sign>0?'Guardar na meta':'Retirar da meta',x.nome)}${FIELD('Valor (R$)',`<input id="goalMoveValue" type="number" min="0.01" step="0.01" value="${sign>0&&x.contrib?x.contrib:''}" placeholder="0,00">`)}<p class="mini-summary">Este controle é manual e não movimenta dinheiro no banco.</p><div class="modal-footer"><button class="btn light" onclick="close_()">Cancelar</button><button class="btn" onclick="moveGoal('${id}',${sign})">Confirmar</button></div>`)}
-function moveGoal(id,sign){const x=S.res.find(v=>v.id===id),amount=Number($('#goalMoveValue').value);if(!x||!Number.isFinite(amount)||amount<=0)return er('Informe um valor válido.');if(sign<0&&amount>Number(x.atual))return er('Você não pode retirar mais do que guardou.');x.atual=Math.round((Number(x.atual)+sign*amount)*100)/100;S.reserveHistory.push({id:uid(),goalId:id,valor:sign*amount,data:today});save();close_();go()}
+function moveGoal(id,sign){const x=S.res.find(v=>v.id===id),amount=moneyValue($('#goalMoveValue'));if(!x||!Number.isFinite(amount)||amount<=0)return er('Informe um valor válido.');if(sign<0&&amount>Number(x.atual))return er('Você não pode retirar mais do que guardou.');x.atual=Math.round((Number(x.atual)+sign*amount)*100)/100;S.reserveHistory.push({id:uid(),goalId:id,valor:sign*amount,data:today});save();close_();go()}
 function deleteGoal(id){if(!confirm('Excluir esta meta?'))return;S.res=S.res.filter(x=>x.id!==id);save();go()}
 const GENERIC={car:[['nome','Nome do cartão','text'],['banco','Instituição (opcional)','text'],['limite','Limite do cartão (R$)','number'],['fech','Fechamento (1 a 28)','number'],['venc','Vencimento (1 a 28)','number']],cmp:[['cid','Cartão','card'],['desc','Descrição (opcional)','text'],['valor','Valor total (R$)','number'],['parc','Número de parcelas','number'],['data','Data da compra','date']],div:[['nome','Nome da dívida','text'],['inst','Instituição (opcional)','text'],['orig','Valor original (R$)','number'],['parcela','Valor da parcela (R$)','number'],['total','Total de parcelas','number'],['pagas','Parcelas já pagas','number'],['juros','Juros mensal (opcional)','number'],['data','Primeiro vencimento','date']]};
 function openGeneric(k,id=''){if(k==='cmp'&&!S.car.length)return open_(`${modalHeader('Antes de continuar')}<p>Cadastre primeiro o cartão que deseja utilizar.</p><div class="modal-footer"><button class="btn" onclick="openGeneric('car')">Cadastrar cartão</button></div>`);const x=S[k]?.find(v=>v.id===id),fields=GENERIC[k];if(!fields)return;open_(`${modalHeader(x?'Editar lançamento':k==='car'?'Novo cartão':k==='cmp'?'Compra parcelada':'Nova dívida')}<div class="field-grid">${fields.map(([name,label,type],i)=>FIELD(label,type==='card'?`<select id="generic${i}">${selectOpts(S.car.map(c=>[c.id,c.nome]),x?.[name]||S.car[0]?.id)}</select>`:`<input id="generic${i}" type="${type}" ${type==='number'?'step="0.01" inputmode="decimal"':''} value="${E(x?.[name]??(type==='date'?today:''))}" placeholder="${E(label)}">`)).join('')}</div><div class="modal-footer"><button class="btn light" onclick="close_()">Cancelar</button><button class="btn" onclick="saveGeneric('${k}','${E(id)}')">Salvar</button></div>`)}
-function saveGeneric(k,id=''){const fields=GENERIC[k],x=S[k]?.find(v=>v.id===id),data={};fields.forEach(([name,label,type],i)=>{const v=$(`#generic${i}`).value;data[name]=type==='number'?Number(v||0):v.trim()});if(k==='car'){if(!data.nome)return er('Digite o nome do cartão.');data.fech=Math.min(28,Math.max(1,Math.floor(data.fech||1)));data.venc=Math.min(28,Math.max(1,Math.floor(data.venc||1)));if(data.limite<0)return er('Informe um limite válido.')}else if(k==='cmp'){if(!data.cid||!validDate(data.data)||data.valor<=0||data.parc<1||data.parc>120)return er('Confira o cartão, valor, parcelas e data.');data.parc=Math.floor(data.parc);data.desc=data.desc||'Compra parcelada'}else if(k==='div'){if(!data.nome||!validDate(data.data)||data.parcela<=0||data.total<1||data.pagas<0||data.pagas>data.total)return er('Confira os dados da dívida.');data.total=Math.floor(data.total);data.pagas=Math.floor(data.pagas)}if(x)Object.assign(x,data);else S[k].push({id:uid(),...data,pm:{}});save();close_();go()}
+function saveGeneric(k,id=''){const fields=GENERIC[k],x=S[k]?.find(v=>v.id===id),data={};fields.forEach(([name,label,type],i)=>{const v=$(`#generic${i}`).value;data[name]=type==='number'?(document.querySelector('#generic'+i)?.dataset.money==='true'?moneyValue(document.querySelector('#generic'+i)):Number(v||0)):v.trim()});if(k==='car'){if(!data.nome)return er('Digite o nome do cartão.');data.fech=Math.min(28,Math.max(1,Math.floor(data.fech||1)));data.venc=Math.min(28,Math.max(1,Math.floor(data.venc||1)));if(data.limite<0)return er('Informe um limite válido.')}else if(k==='cmp'){if(!data.cid||!validDate(data.data)||data.valor<=0||data.parc<1||data.parc>120)return er('Confira o cartão, valor, parcelas e data.');data.parc=Math.floor(data.parc);data.desc=data.desc||'Compra parcelada'}else if(k==='div'){if(!data.nome||!validDate(data.data)||data.parcela<=0||data.total<1||data.pagas<0||data.pagas>data.total)return er('Confira os dados da dívida.');data.total=Math.floor(data.total);data.pagas=Math.floor(data.pagas)}if(x)Object.assign(x,data);else S[k].push({id:uid(),...data,pm:{}});save();close_();go()}
 function openInitialBalance(){const s=S.settings||{};open_(`${modalHeader('Saldo inicial','Informe quanto havia disponível no início do mês escolhido.')}<div class="field-grid">${FIELD('Valor (R$)',`<input id="baseAmount" type="number" step="0.01" value="${E(s.startBalance??'')}" placeholder="0,00">`)}${FIELD('A partir de',`<input id="baseMonth" type="month" value="${E(s.baseMonth||ym)}">`)}</div><p class="mini-summary">Não temos acesso a contas bancárias. O saldo será estimado a partir de seus lançamentos registrados, mês a mês, desde esta data.</p><div class="modal-footer"><button class="btn light" onclick="close_()">Cancelar</button>${s.startBalance!==undefined?`<button class="btn d" onclick="deleteInitialBalance()">Remover</button>`:''}<button class="btn" onclick="saveInitialBalance()">Salvar</button></div>`)}
-function saveInitialBalance(){const balance=Number($('#baseAmount').value),month=$('#baseMonth').value;if($('#baseAmount').value.trim()===''||!Number.isFinite(balance)||!/^\d{4}-(0[1-9]|1[0-2])$/.test(month))return er('Informe valor e mês válidos.');S.settings={...S.settings,startBalance:balance,baseMonth:month};save();close_();go()}
+function saveInitialBalance(){const balance=moneyValue($('#baseAmount')),month=$('#baseMonth').value;if($('#baseAmount').value.trim()===''||!Number.isFinite(balance)||!/^\d{4}-(0[1-9]|1[0-2])$/.test(month))return er('Informe valor e mês válidos.');S.settings={...S.settings,startBalance:balance,baseMonth:month};save();close_();go()}
 function deleteInitialBalance(){delete S.settings.startBalance;delete S.settings.baseMonth;save();close_();go()}
 function setTheme(theme){setAppearanceOption('mode',theme)}
 function backupDados(){const data={versao:2,exportadoEm:new Date().toISOString(),perfil:authUser,dados:S};downloadFile('backup-meu-controle-'+authUser+'.json',JSON.stringify(data,null,2),'application/json')}
