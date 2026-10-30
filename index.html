@@ -76,6 +76,9 @@ nav.bottom{display:none}.notice{padding:11px 14px;border-radius:12px;font-size:1
 .sim-display span{font-size:18px;color:var(--muted)}.sim-display input{border:0;background:transparent;text-align:right;font-size:34px;font-weight:800;letter-spacing:-.04em;padding:0;min-height:45px;outline:0}
 .sim-label{margin:13px 0;border-radius:10px;font-size:12px}.sim-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 .sim-keys button{min-height:59px;border-radius:13px;background:var(--surface2);color:var(--ink);font-size:21px;font-weight:650;border:1px solid var(--line)}
+/* Simulador: impede zoom por toque duplo sem bloquear o zoom por pinça do navegador. */
+.sim-calc button,.sim-calc .sim-keys,.sim-calc .sim-display{touch-action:manipulation}
+.sim-calc button{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
 .sim-keys button:active{transform:scale(.98)}.sim-keys button.clear{color:var(--bad)}.sim-keys button.sim-back{font-size:16px}.sim-keys button.sim-equal{grid-column:2/span 2;background:var(--accent);color:white;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px}
 .sim-results{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:15px}
 .sim-total{display:flex;flex-direction:column;gap:6px}.sim-total small,.sim-pair small{color:var(--muted);font-size:11px}
@@ -217,10 +220,10 @@ aside::-webkit-scrollbar{width:9px}aside::-webkit-scrollbar-thumb{background:var
 </style></head><body class="auth-locked">
 <section id="loginScreen" class="login-screen" aria-label="Login"><div class="login-box"><div class="login-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></div><h1>rayo<span class="brand-dot">.</span></h1><p>Suas finanças, sem complicar.</p><form id="loginForm"><label for="loginWho">Usuário</label><input id="loginWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Seu nome de usuário" required><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required><button class="btn" id="loginButton" type="submit">Entrar</button><p class="auth-switch">Ainda não tem uma conta? <button type="button" class="auth-link" onclick="switchAuthView('register')">Criar minha conta</button></p></form><form id="registerForm" hidden><p class="register-lede">Seu espaço financeiro privado, com dados salvos na nuvem.</p><label for="registerWho">Escolha seu usuário</label><input id="registerWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Ex.: leandro.silva" required><small class="form-hint">3 a 32 caracteres, sem espaços. Letras, números, ponto, hífen e _.</small><label for="registerPassword">Crie uma senha</label><input id="registerPassword" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Pelo menos 12 caracteres" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><label for="registerConfirmation">Confirme sua senha</label><input id="registerConfirmation" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Digite a senha novamente" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><p class="pw-hint" id="registerMatch" aria-live="polite">As duas senhas devem ser iguais.</p><button class="btn" type="submit" id="registerButton">Criar minha conta</button><p class="auth-switch">Já tem uma conta? <button class="auth-link" type="button" onclick="switchAuthView('login')">Fazer login</button></p></form><div id="loginMessage" aria-live="polite"></div></div></section>
 <aside aria-label="Navegação"><div class="brand"><span class="brand-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></span><span class="brand-name">rayo<span class="brand-dot">.</span></span></div><div id="sn"></div><div class="side-bottom" aria-hidden="true"></div></aside>
-<main><header class="main-head"><div class="head-title"><div class="eyebrow" id="eyebrow"></div><h1 id="ti">Visão geral</h1></div><div class="month-control"><button class="mini-action" aria-label="Mês anterior" onclick="moveMonth(-1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><input type="month" id="ym" aria-label="Mês selecionado"><button class="mini-action" aria-label="Próximo mês" onclick="moveMonth(1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div><button class="btn add-icon-btn" id="quickHeader" onclick="openAddMenu()" aria-label="Novo lançamento" title="Novo lançamento"><svg class="ico lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="head-user"><span class="user-badge" id="userBadge">U</span><span id="sessionName" class="user-name" style="font-weight:650"></span><span class="cloud-status" id="cloudStatus" role="status" aria-live="polite" title="Situação dos dados na nuvem">☁ Nuvem conectada</span><button class="mini-action" title="Meu perfil" onclick="openMyProfile()"><svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button></div></header><div id="v"></div><footer class="rayo-labs-footer">RAYO Labs · v0.2.1 Beta</footer></main>
+<main><header class="main-head"><div class="head-title"><div class="eyebrow" id="eyebrow"></div><h1 id="ti">Visão geral</h1></div><div class="month-control"><button class="mini-action" aria-label="Mês anterior" onclick="moveMonth(-1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><input type="month" id="ym" aria-label="Mês selecionado"><button class="mini-action" aria-label="Próximo mês" onclick="moveMonth(1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div><button class="btn add-icon-btn" id="quickHeader" onclick="openAddMenu()" aria-label="Novo lançamento" title="Novo lançamento"><svg class="ico lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="head-user"><span class="user-badge" id="userBadge">U</span><span id="sessionName" class="user-name" style="font-weight:650"></span><span class="cloud-status" id="cloudStatus" role="status" aria-live="polite" title="Situação dos dados na nuvem">☁ Nuvem conectada</span><button class="mini-action" title="Meu perfil" onclick="openMyProfile()"><svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button></div></header><div id="v"></div><footer class="rayo-labs-footer">RAYO Labs · v0.2.3 Beta</footer></main>
 <nav id="bn" class="bottom" aria-label="Navegação inferior"></nav><div id="m" class="modal" role="dialog" aria-modal="true" aria-hidden="true"><div id="mb" class="modal-panel"></div></div><script>const KEY="mcf_v1"; // Os dados anteriores continuam guardados no navegador como backup.
-const APP_VERSION="rayo-labs-v0.2.1-20261030";
-const RAYO_LABS_VERSION="v0.2.1 Beta";
+const APP_VERSION="rayo-labs-v0.2.3-20261030";
+const RAYO_LABS_VERSION="v0.2.3 Beta";
 const def=()=>({rec:[],fix:[],var:[],car:[],cmp:[],div:[],res:[],budgets:[],favs:[],reserveHistory:[],settings:{}});
 const normalizeS=data=>{
  const a=Object.assign(def(),data&&typeof data==='object'?data:{});
@@ -739,18 +742,35 @@ function settings(){
 
 // Simulador isolado: os dados existem apenas na memória desta aba e NUNCA entram no estado financeiro.
 let simValue='0',simKind='out',simLabel='',simItems=[];
+// Atualiza somente o visor; redesenhar toda a página em cada toque causava atraso e perda de toques rápidos no iPhone.
+function simSyncDisplay(){
+ const input=document.getElementById('simAmount');
+ if(input&&input.value!==simValue)input.value=simValue;
+}
 function simPushKey(k){
- if(k==='C')simValue='0';else if(k==='back')simValue=simValue.slice(0,-1)||'0';
- else if(k===','){if(!simValue.includes(','))simValue+=','}
+ if(k==='C')simValue='0';
+ else if(k==='back')simValue=simValue.slice(0,-1)||'0';
+ else if(k===','){if(!simValue.includes(','))simValue+=',';}
  else if(/^\d$/.test(k)){
-  const decimals=simValue.split(',')[1];if(decimals!==undefined&&decimals.length>=2)return;
+  const decimals=simValue.split(',')[1];
+  if(decimals!==undefined&&decimals.length>=2)return;
   if(simValue.replace(/\D/g,'').length>=12)return;
   simValue=simValue==='0'?k:simValue+k;
  }
- go();
+ simSyncDisplay();
 }
-function simType(v){const clean=String(v).replace(/[^\d,]/g,'').replace(/(,.*),/g,'$1');const m=clean.match(/^(\d{0,10})(?:,(\d{0,2}))?/);simValue=(m?.[1]||'0')+(m?.[2]!==undefined?','+m[2]:'');}
-function simSelect(k){simKind=k;go()}
+function simType(v){
+ const clean=String(v).replace(/[^\d,]/g,'').replace(/(,.*),/g,'$1');
+ const m=clean.match(/^(\d{0,10})(?:,(\d{0,2}))?/);
+ simValue=(m?.[1]||'0')+(m?.[2]!==undefined?','+m[2]:'');
+}
+function simSelect(k){
+ if(k!=='in'&&k!=='out')return;
+ simKind=k;
+ document.querySelectorAll('.sim-segment button[data-sim-kind]').forEach(button=>{
+  button.classList.toggle('active',button.dataset.simKind===k);
+ });
+}
 function simAdd(){
  const amount=Number(simValue.replace(',','.'));
  if(!Number.isFinite(amount)||amount<=0)return alert('Informe um valor maior que zero.');
@@ -763,11 +783,11 @@ function simulator(){
  const ins=simItems.filter(x=>x.type==='in').reduce((s,x)=>s+x.amount,0),outs=simItems.filter(x=>x.type==='out').reduce((s,x)=>s+x.amount,0);
  const keys=['7','8','9','4','5','6','1','2','3','C','0',','];
  return `<div class="sim-intro"><span>${I('shield','sm')} Área de teste</span><span>Nenhum valor é salvo</span></div><div class="sim-layout">
- <section class="card sim-calc"><div class="subhead"><h2>Calculadora</h2><button class="mini-action" onclick="simPushKey('back')" aria-label="Apagar dígito">${I('close','sm')}</button></div>
- <div class="segmented sim-segment"><button class="${simKind==='in'?'active':''}" onclick="simSelect('in')">${I('trendup','sm')} Ganho</button><button class="${simKind==='out'?'active':''}" onclick="simSelect('out')">${I('trenddown','sm')} Gasto</button></div>
- <div class="sim-display"><span>R$</span><input id="simAmount" aria-label="Valor para simular" inputmode="decimal" value="${E(simValue)}" oninput="simType(this.value)" onblur="go()"></div>
+ <section class="card sim-calc"><div class="subhead"><h2>Calculadora</h2><button type="button" class="mini-action" onclick="simPushKey('back')" aria-label="Apagar dígito">${I('close','sm')}</button></div>
+ <div class="segmented sim-segment"><button type="button" data-sim-kind="in" class="${simKind==='in'?'active':''}" onclick="simSelect('in')">${I('trendup','sm')} Ganho</button><button type="button" data-sim-kind="out" class="${simKind==='out'?'active':''}" onclick="simSelect('out')">${I('trenddown','sm')} Gasto</button></div>
+ <div class="sim-display"><span>R$</span><input id="simAmount" aria-label="Valor para simular" inputmode="decimal" value="${E(simValue)}" oninput="simType(this.value)" onblur="simSyncDisplay()"></div>
  <input class="sim-label" aria-label="Descrição fictícia" maxlength="50" placeholder="Descrição (opcional)" value="${E(simLabel)}" oninput="simLabel=this.value">
- <div class="sim-keys">${keys.map(k=>`<button onclick="simPushKey('${k}')" class="${k==='C'?'clear':''}">${k}</button>`).join('')}<button class="sim-back" onclick="simPushKey('back')" aria-label="Apagar último número">${I('chevronleft')}</button><button class="sim-equal" onclick="simAdd()">${I('plus')} Adicionar</button></div>
+ <div class="sim-keys">${keys.map(k=>`<button type="button" onclick="simPushKey('${k}')" class="${k==='C'?'clear':''}">${k}</button>`).join('')}<button type="button" class="sim-back" onclick="simPushKey('back')" aria-label="Apagar último número">${I('chevronleft')}</button><button type="button" class="sim-equal" onclick="simAdd()">${I('plus')} Adicionar</button></div>
  </section>
  <div class="sim-right"><div class="sim-results"><div class="sim-total"><small>Resultado da simulação</small><strong class="${ins-outs>=0?'good':'bad'}">${moneyBRL(ins-outs)}</strong></div><div class="sim-pair"><div><small>Ganhos</small><b>${moneyBRL(ins)}</b></div><div><small>Gastos</small><b>${moneyBRL(outs)}</b></div></div></div>
  ${card('Valores simulados',simItems.length?simItems.slice().reverse().map(x=>`<div class="sim-item"><span class="sim-symbol">${I(x.type==='in'?'trendup':'trenddown')}</span><span class="item-middle"><strong>${E(x.label)}</strong><small>${x.type==='in'?'Ganho':'Gasto'} fictício</small></span><b class="${x.type==='in'?'good':''}">${x.type==='in'?'+':'−'} ${moneyBRL(x.amount)}</b><button class="mini-action" aria-label="Remover simulação" onclick="simDelete('${x.id}')">${I('trash','sm')}</button></div>`).join(''):`<div class="empty">${I('calculator')}<div>Adicione valores para simular.</div></div>`,`<button class="mini-action" onclick="simClear()" title="Limpar calculadora" aria-label="Limpar calculadora">${I('trash','sm')}</button>`)}
