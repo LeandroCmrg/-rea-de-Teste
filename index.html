@@ -258,13 +258,35 @@ nav.bottom>button.quick .ico{width:29px;height:29px;stroke-width:2.5}
 .quick-installment label{margin:0;flex:1}
 .quick-help{font-size:12px;color:var(--muted);line-height:1.45;margin:0}
 
+
+/* RAYO Labs v0.4.1 — correções de rolagem horizontal, modal e FAB no iPhone */
+html,body{max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
+@supports(overflow:clip){html,body{overflow-x:clip}}
+main,#v,.card,.page-stack{min-width:0;max-width:100%}
+img,svg,video,canvas{max-width:100%}
+.modal{width:100%;max-width:100vw;overflow:hidden;overscroll-behavior:none;touch-action:pan-y}
+.modal-panel{min-width:0;max-width:min(510px,100vw);overflow-x:hidden;overscroll-behavior:contain}
+@supports(overflow:clip){.modal-panel{overflow-x:clip}}
+#mb .field,#mb .field-grid,#mb .segmented{min-width:0;max-width:100%}
+#mb input,#mb select,#mb textarea{min-width:0;max-width:100%}
+body.rayo-modal-lock{position:fixed!important;inset:var(--rayo-lock-top,0px) 0 auto 0!important;height:100dvh;width:100%!important;overflow:hidden!important;overscroll-behavior:none}
+@media(max-width:740px){
+ .modal{height:100dvh;max-height:100dvh;align-items:flex-end}
+ .modal-panel{width:100%;max-width:100vw;max-height:calc(100dvh - 14px);padding:18px 17px 18px;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+ /* A data nativa do iPhone exige espaço; uma coluna evita compressão e sobreposição. */
+ #mb .field-grid:not(.quick-payment-detail):not(.boleto-preview-item){grid-template-columns:minmax(0,1fr)}
+ #mb .field-grid:not(.quick-payment-detail)>.field{grid-column:1/-1}
+ nav.bottom{align-items:center!important}
+ nav.bottom>button.quick{margin:0 auto!important;top:0!important;transform:none!important;align-self:center!important;justify-self:center!important;width:51px!important;height:51px!important;min-width:51px!important;max-width:51px!important;position:relative!important}
+ nav.bottom .nav-half{align-items:center!important}
+}
 </style></head><body class="auth-locked">
 <section id="loginScreen" class="login-screen" aria-label="Login"><div class="login-box"><div class="login-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></div><h1>rayo<span class="brand-dot">.</span></h1><p>Suas finanças, sem complicar.</p><form id="loginForm"><label for="loginWho">Usuário</label><input id="loginWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Seu nome de usuário" required><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required><button class="btn" id="loginButton" type="submit">Entrar</button><p class="auth-switch">Ainda não tem uma conta? <button type="button" class="auth-link" onclick="switchAuthView('register')">Criar minha conta</button></p></form><form id="registerForm" hidden><p class="register-lede">Seu espaço financeiro privado, com dados salvos na nuvem.</p><label for="registerWho">Escolha seu usuário</label><input id="registerWho" type="text" minlength="3" maxlength="32" autocomplete="username" placeholder="Ex.: leandro.silva" required><small class="form-hint">3 a 32 caracteres, sem espaços. Letras, números, ponto, hífen e _.</small><label for="registerPassword">Crie uma senha</label><input id="registerPassword" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Pelo menos 12 caracteres" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><label for="registerConfirmation">Confirme sua senha</label><input id="registerConfirmation" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Digite a senha novamente" required oninput="checkPasswordConfirmation('registerPassword','registerConfirmation','registerMatch')"><p class="pw-hint" id="registerMatch" aria-live="polite">As duas senhas devem ser iguais.</p><button class="btn" type="submit" id="registerButton">Criar minha conta</button><p class="auth-switch">Já tem uma conta? <button class="auth-link" type="button" onclick="switchAuthView('login')">Fazer login</button></p></form><div id="loginMessage" aria-live="polite"></div></div></section>
 <aside aria-label="Navegação"><div class="brand"><span class="brand-mark"><svg viewBox="0 0 512 512" width="100%" height="100%" aria-hidden="true" fill="none"><path d="M166 360V147h111c72 0 109 36 109 91 0 53-40 87-110 87H166" stroke="currentColor" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/><path d="M274 326 367 391" stroke="currentColor" stroke-width="39" stroke-linecap="round"/><circle cx="378" cy="145" r="20" fill="#A8CDDA"/></svg></span><span class="brand-name">rayo<span class="brand-dot">.</span></span></div><div id="sn"></div><div class="side-bottom" aria-hidden="true"></div></aside>
-<main><header class="main-head"><div class="head-title"><div class="eyebrow" id="eyebrow"></div><h1 id="ti">Visão geral</h1></div><div class="month-control"><button class="mini-action" aria-label="Mês anterior" onclick="moveMonth(-1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><input type="month" id="ym" aria-label="Mês selecionado"><button class="mini-action" aria-label="Próximo mês" onclick="moveMonth(1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div><button class="btn add-icon-btn" id="quickHeader" onclick="openAddMenu()" aria-label="Novo lançamento" title="Novo lançamento"><svg class="ico lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="head-user"><span class="user-badge" id="userBadge">U</span><span id="sessionName" class="user-name" style="font-weight:650"></span><span class="cloud-status" id="cloudStatus" role="status" aria-live="polite" title="Situação dos dados na nuvem">☁ Nuvem conectada</span><button class="mini-action" title="Meu perfil" onclick="openMyProfile()"><svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button></div></header><div id="v"></div><footer class="rayo-labs-footer">RAYO Labs · v0.4.0 Beta</footer></main>
+<main><header class="main-head"><div class="head-title"><div class="eyebrow" id="eyebrow"></div><h1 id="ti">Visão geral</h1></div><div class="month-control"><button class="mini-action" aria-label="Mês anterior" onclick="moveMonth(-1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><input type="month" id="ym" aria-label="Mês selecionado"><button class="mini-action" aria-label="Próximo mês" onclick="moveMonth(1)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div><button class="btn add-icon-btn" id="quickHeader" onclick="openAddMenu()" aria-label="Novo lançamento" title="Novo lançamento"><svg class="ico lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="head-user"><span class="user-badge" id="userBadge">U</span><span id="sessionName" class="user-name" style="font-weight:650"></span><span class="cloud-status" id="cloudStatus" role="status" aria-live="polite" title="Situação dos dados na nuvem">☁ Nuvem conectada</span><button class="mini-action" title="Meu perfil" onclick="openMyProfile()"><svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button></div></header><div id="v"></div><footer class="rayo-labs-footer">RAYO Labs · v0.4.1 Beta</footer></main>
 <nav id="bn" class="bottom" aria-label="Navegação inferior"></nav><div id="m" class="modal" role="dialog" aria-modal="true" aria-hidden="true"><div id="mb" class="modal-panel"></div></div><script>const KEY="mcf_v1"; // Os dados anteriores continuam guardados no navegador como backup.
-const APP_VERSION="rayo-labs-v0.4.0-20261030";
-const RAYO_LABS_VERSION="v0.4.0 Beta";
+const APP_VERSION="rayo-labs-v0.4.1-20261030";
+const RAYO_LABS_VERSION="v0.4.1 Beta";
 const def=()=>({rec:[],fix:[],var:[],car:[],cmp:[],div:[],bol:[],res:[],budgets:[],favs:[],reserveHistory:[],settings:{}});
 const normalizeS=data=>{
  const a=Object.assign(def(),data&&typeof data==='object'?data:{});
@@ -1029,8 +1051,26 @@ function boletoPage(){
 }
 
 const V={bol:boletoPage,dash:dashboard,rec:gains,spend:expenses,calendar,history,recurr:recurrence,budgets,res:goals,car:cardsPage,div:debts,rel:reports,sim:simulator,settings};
-function open_(html){today=localDate(new Date());$('#mb').innerHTML=html;initMoneyMasks();$('#m').classList.add('open');$('#m').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
-function close_(){$('#m').classList.remove('open');$('#m').setAttribute('aria-hidden','true');document.body.style.overflow='';}
+let rayoModalScrollY=0;
+function open_(html){
+ today=localDate(new Date());
+ const modal=$('#m'),panel=$('#mb');
+ if(!modal.classList.contains('open')){
+  rayoModalScrollY=window.scrollY||0;
+  document.body.style.setProperty('--rayo-lock-top',`-${rayoModalScrollY}px`);
+  document.body.classList.add('rayo-modal-lock');
+ }
+ panel.innerHTML=html;panel.scrollTop=0;initMoneyMasks();
+ modal.classList.add('open');modal.setAttribute('aria-hidden','false');
+ document.body.style.overflow='hidden';
+}
+function close_(){
+ const modal=$('#m'),wasOpen=modal.classList.contains('open');
+ modal.classList.remove('open');modal.setAttribute('aria-hidden','true');
+ document.body.classList.remove('rayo-modal-lock');document.body.style.overflow='';
+ document.body.style.removeProperty('--rayo-lock-top');
+ if(wasOpen)window.scrollTo(0,rayoModalScrollY);
+}
 function er(t){let n=$('#er');if(!n){n=document.createElement('p');n.id='er';n.className='login-error';$('#mb').append(n)}n.textContent=t}
 const modalHeader=(title,sub='')=>`<div class="modal-top"><div><h2>${E(title)}</h2>${sub?`<p>${E(sub)}</p>`:''}</div><button class="mini-action" aria-label="Fechar janela" onclick="close_()">${I('close')}</button></div>`;
 const selectOpts=(values,selected)=>values.map(val=>{const k=Array.isArray(val)?val[0]:val,n=Array.isArray(val)?val[1]:val;return `<option value="${E(k)}" ${String(selected)===String(k)?'selected':''}>${E(n)}</option>`}).join('');
@@ -1044,7 +1084,6 @@ function openAddMenu(){
  <div class="rayo-add-menu">
   <button class="rayo-add-option" onclick="openQuick('var')"><span class="rayo-add-ico">${I('trenddown')}</span><span><strong>Adicionar gasto</strong><small>Pix, débito, crédito ou boleto</small></span></button>
   <button class="rayo-add-option" onclick="openQuick('rec')"><span class="rayo-add-ico">${I('trendup')}</span><span><strong>Adicionar ganho</strong><small>Recebido ou previsto</small></span></button>
-  <button class="rayo-add-option" onclick="openBoletoEditor()"><span class="rayo-add-ico">${I('receipt')}</span><span><strong>Adicionar boleto</strong><small>À vista ou parcelado, com vencimentos</small></span></button>
   <button class="rayo-add-option" onclick="openFiscalMenu()"><span class="rayo-add-ico">${I('receipt')}</span><span><strong>Escanear nota fiscal</strong><small>Tire uma foto e confira o valor reconhecido</small></span></button>
  </div>`);
 }
@@ -1431,8 +1470,8 @@ function openQuick(kind='var',dateOverride=null,favId=null,editId=null){
  <div class="field full">${FIELD('Descrição <span class="optional">(opcional)</span>',`<input id="qDesc" maxlength="120" value="${E(desc)}" placeholder="Se quiser, descreva a compra" oninput="guessQuickCategory()">`)}</div>
  ${kind==='rec'?'':`<div class="field full quick-payment-panel">${FIELD('Forma de pagamento',`<select id="qMethod" onchange="renderQuickPayment()">${selectOpts([['Pix','Pix'],['Dinheiro','Dinheiro'],['Débito','Débito'],['Transferência','Transferência'],['Crédito','Crédito'],['Boleto','Boleto'],['Outro','Outro']],method)}</select>`)}</div>
  <div id="qPaymentDetails" class="field full quick-payment-panel" aria-live="polite"></div>`}
- <div class="field full" id="qExtraToggle"><button class="btn light tiny" onclick="document.getElementById('qExtra').classList.toggle('hidden')">${I('sliders','sm')} Mais opções ${I('down','sm')}</button></div>
- <div id="qExtra" class="field-grid full ${source?.freq&&source.freq!=='unica'?'':'hidden'}">
+ <div class="field full" id="qExtraToggle"><button class="btn light tiny" onclick="toggleQuickExtra()">${I('sliders','sm')} Mais opções ${I('down','sm')}</button></div>
+ <div id="qExtra" data-expanded="${source?.freq&&source.freq!=='unica'?'true':'false'}" class="field-grid full ${source?.freq&&source.freq!=='unica'?'':'hidden'}">
  ${FIELD('Tipo de lançamento',`<select id="qKind" onchange="quickChangeKind(this.value)">${selectOpts([['var','Gasto variável'],['fix','Gasto fixo'],['rec','Ganho']],kind)}</select>`)}
  ${FIELD('Repetição',`<select id="qFreq" onchange="document.getElementById('qEndWrap').classList.toggle('hidden',this.value==='unica')">${selectOpts([['unica','Uma vez'],['semanal','Toda semana'],['mensal','Todo mês'],['anual','Todo ano']],freq)}</select>`)}
  <div id="qEndWrap" class="field ${freq==='unica'?'hidden':''}">${FIELD('Repetir até <span class="optional">(opcional)</span>',`<input type="date" id="qEnd" value="${E(source?.endDate||'')}">`)}</div>
@@ -1443,12 +1482,20 @@ function openQuick(kind='var',dateOverride=null,favId=null,editId=null){
  <div class="modal-footer"><button class="btn light" onclick="close_()">Cancelar</button><button class="btn" onclick="saveQuick('${kind}','${E(editId||'')}')">${I('check','sm')} ${isNew?'Adicionar':'Salvar alterações'}</button></div>`);
  renderQuickPayment();updateQuickStatusHint();
 }
+function toggleQuickExtra(){
+ const panel=document.getElementById('qExtra');if(!panel)return;
+ const expanded=panel.dataset.expanded!=='true';
+ panel.dataset.expanded=expanded?'true':'false';
+ if(!['Crédito','Boleto'].includes(document.getElementById('qMethod')?.value||'')){
+  panel.classList.toggle('hidden',!expanded);
+ }
+}
 function renderQuickPayment(){
  const detail=$('#qPaymentDetails'),method=$('#qMethod')?.value;
  if(!detail)return;
  const special=['Crédito','Boleto'].includes(method);
  $('#qExtraToggle')?.classList.toggle('hidden',special);
- $('#qExtra')?.classList.toggle('hidden',special);
+ const extras=$('#qExtra');if(extras)extras.classList.toggle('hidden',special||extras.dataset.expanded!=='true');
  $('#qFavLine')?.classList.toggle('hidden',special);
  if(method==='Crédito'){
   detail.innerHTML=`<div class="quick-payment-detail">
@@ -1477,7 +1524,7 @@ function renderQuickBoletoDates(){
 function updateQuickStatusHint(){
  const el=$('#quickDateStatusHint'),method=$('#qMethod')?.value,d=$('#qDate')?.value||today,mode=$('#qPaid')?.value||'auto';
  if(!el)return;
- el.textContent=['Crédito','Boleto'].includes(method)?'':mode!=='auto'?'Situação definida manualmente.':d>today?'Previsto automaticamente.':'A situação é calculada pela data, e pode ser alterada em Mais opções.';
+ el.textContent='';el.hidden=true; // A situação segue automática, sem mensagem redundante.
 }
 function quickChangeKind(k){
  const desc=$('#qDesc')?.value||'',date=$('#qDate')?.value||today,val=moneyValue($('#qValor')),method=$('#qMethod')?.value||'Pix',cat=$('#qCat')?.value;
